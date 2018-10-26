@@ -3,7 +3,7 @@ from grab import Grab
 from bs4 import BeautifulSoup
 import re
 import time
-from novel.models import Book, Chapter
+from novel.models import Book, Chapter, Content
 from novel.util import Util
 
 
@@ -17,9 +17,9 @@ class Command(BaseCommand):
             if mode == 0:
                 Command.grab_rank()
             elif mode == 1:
-                print(1)
-            elif mode == 2:
                 Command.init_chapter()
+            elif mode == 2:
+                Command.init_content()
 
     @staticmethod
     def grab_rank():
@@ -59,16 +59,16 @@ class Command(BaseCommand):
 
     @staticmethod
     def init_chapter():
+        print("开始初始化章节")
         offset = 0
         size = 100
         books = Book.objects.filter(source='sodu').filter(status=0).all()[offset:size]
         while len(books) > 0:
             for book in books:
                 Command.grab_book_chapter(book)
-                break
             offset += size
             books = Book.objects.filter(source='sodu').filter(status=0).all()[offset:size]
-            break
+        print("章节初始化完毕！")
 
     @staticmethod
     def grab_book_chapter(book):
@@ -81,21 +81,23 @@ class Command(BaseCommand):
             print("\t正在采集 " + book.name + " 第 " + str(max_page) + " 页\t" + chapter_url)
             body = Command.get_body(chapter_url)
             soup = BeautifulSoup(body, 'html.parser')
-            htmls = soup.find_all(class_='main-html')
-            htmls.reverse()
+            html_list = soup.find_all(class_='main-html')
+            html_list.reverse()
             pattern = '<a.*?alt="(.*?)".*?href="(.*?)".*?>(.*?)</a>[\s\S]*?<a.*?href="(.*?)".*?>(.*?)</a>[\s\S]' \
                       '*?<div.*?>(.*?)</div>'
-            for item in htmls:
+            for item in html_list:
                 item = str(item)
                 finds = re.findall(pattern, item)
-                chapter = Chapter(title=finds[0][0],
+                chapter = Chapter(title=Command.format_title(finds[0][0]),
                                   link=Command.get_link(finds[0][1]),
                                   source=finds[0][4],
                                   book_id=book.id,
                                   updated_at=Util.str_to_time(finds[0][5], '%Y/%m/%d %H:%M:%S'),
                                   created_at=int(time.time()))
-                chapter.save()
-            break
+                if Command.chapter_not_exists(chapter):
+                    chapter.save()
+            max_page -= 1
+            time.sleep(1)
 
     @staticmethod
     def get_max_page(book):
@@ -127,3 +129,16 @@ class Command(BaseCommand):
     @staticmethod
     def get_link(url):
         return url.split('chapterurl=')[1]
+
+    @staticmethod
+    def format_title(title):
+        return title.replace('【卓雅居全文字秒更】', '').strip()
+
+    @staticmethod
+    def chapter_not_exists(chapter):
+        return Chapter.objects.filter(source=chapter.source).filter(title=chapter.title).count() == 0
+
+    @staticmethod
+    def init_content():
+        print(1)
+

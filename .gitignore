@@ -2,3 +2,4 @@
 venv
 migrations
 config/my.cnf
+novel/__pycache__
