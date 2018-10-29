@@ -35,3 +35,8 @@ class Util:
                               'Chrome/69.0.3497.100 Safari/537.36',
                 'Referer': 'http://www.sodu.cc/top.html'}
 
+    @staticmethod
+    def get_page(kwargs):
+        if kwargs.get('page') is None:
+            return 1
+        return int(kwargs.get('page'))

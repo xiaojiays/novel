@@ -58,6 +58,10 @@ class SourceLink(models.Model):
     link = models.CharField(max_length=300)
     status = models.IntegerField(default=0)
 
+    def no_need_grab(self):
+        book = Book.objects.filter(id=self.book_id).first()
+        return book is None or book.finish
+
 
 class Chapter(models.Model):
     title = models.CharField(max_length=30)
@@ -66,6 +70,7 @@ class Chapter(models.Model):
     link = models.CharField(max_length=500, default='')
     content_id = models.IntegerField(default=0)
     uid = models.CharField(max_length=32, default='')
+    number = models.IntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

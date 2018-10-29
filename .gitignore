@@ -3,3 +3,4 @@ venv
 migrations
 config/my.cnf
 novel/__pycache__
+*.pyc
