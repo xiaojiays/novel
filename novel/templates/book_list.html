@@ -1,103 +1,480 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Django: the Web framework for perfectionists with deadlines.</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/static/admin/css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="/static/base.css">
-</head>
-<body>
-<header class="u-clearfix">
-    <div class="logo">
-        <a href="{{settings.SITE}}" target="_blank" rel="noopener">
-            <h2>{{settings.SITE_NAME}}</h2>
-        </a>
-    </div>
-    <div class="release-notes">
-        <p>View <a href="https://docs.djangoproject.com/en/2.1/releases/" target="_blank" rel="noopener">release
-            notes</a> for Django 2.1</p>
-    </div>
-</header>
-<main>
-    <div class="figure">
-        <svg class="figure__animation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#FFF" d="M0 0h512v512H0z"></path>
-            <text transform="translate(97.173 475.104)"></text>
-            <path d="M307.2 224.6c0 4.6-.5 9-1.6 13.2-2.5-4.4-5.6-8.4-9.2-12-4.6-4.6-10-8.4-16-11.2 2.8-11.2 4.5-22.9 5-34.6 1.8 1.4 3.5 2.9 5 4.5 10.5 10.3 16.8 24.5 16.8 40.1zM232.2 214.6c-6 2.8-11.4 6.6-16 11.2-3.5 3.6-6.6 7.6-9.1 12-1-4.3-1.6-8.7-1.6-13.2 0-15.7 6.3-29.9 16.6-40.1 1.6-1.6 3.3-3.1 5.1-4.5.6 11.8 2.2 23.4 5 34.6z"
-                  fill="#2E3B39"></path>
-            <path class="body" d="M279.7 217.6c12.9-48.1 5.1-104-23.4-142.6-28.5 38.5-36.2 94.5-23.4 142.6h46.8z"
-                  fill="#FF7058"></path>
-            <path class="tip" d="M273 104.7c-4.4-10.6-9.9-20.6-16.6-29.7-6.7 9-12.2 19-16.6 29.7H273z"
-                  fill="#2E3B39"></path>
-            <circle cx="256.3" cy="144.8" fill="#FFF" r="15.5"></circle>
-            <circle class="circle" cx="256.3" cy="144.8" fill="#84DBFF" r="12.2"></circle>
-            <path class="removehole" d="M267.5 139.9l-16 16c4.5 2 9.8 1.1 13.5-2.5 3.6-3.7 4.5-9.1 2.5-13.5z"
-                  fill="#54C0EB"></path>
-            <path class="fuel"
-                  d="M276.8 234.9c.4-2.4.6-5.1.6-7.9 0-12.1-3.9-21.8-8.8-21.8s-8.8 9.8-8.8 21.8c0 2.8.2 5.4.6 7.9h16.4zM252.3 234.9c.4-2.4.6-5.1.6-7.9 0-12.1-3.9-21.8-8.8-21.8-4.8 0-8.8 9.8-8.8 21.8 0 2.8.2 5.4.6 7.9h16.4z"
-                  fill="#FFD05B"></path>
-            <path class="smoke"
-                  d="M416.6 358.8c0-1.8-.4-3.6-1-5.2-2.1-5.6-7.5-9.6-13.8-9.6-.7 0-1.4.1-2.1.2-.3-9.6-8.2-17.3-17.9-17.3-2.1 0-4.2.4-6.1 1.1-3-5.6-8.9-9.4-15.7-9.4-.5 0-1 0-1.5.1-.5 0-1-.1-1.5-.1-6.8 0-12.7 3.8-15.7 9.4-1.9-.7-3.9-1.1-6.1-1.1-9.9 0-17.9 8-17.9 17.9 0 1.1.1 2.3.3 3.3-.9-.2-1.8-.3-2.8-.3-5.1 0-9.5 2.6-12.1 6.5-2.2-1.4-4.9-2.3-7.8-2.3-7.6 0-13.8 5.9-14.4 13.3h-.1c-5.9 0-11 3.6-13.2 8.7-2.6-3-6.5-5-10.9-5h-.1-.5-.1-.1c-4.3 0-8.2 1.9-10.9 5-2.2-5.1-7.3-8.7-13.2-8.7h-.1c-.6-7.5-6.8-13.3-14.4-13.3-2.9 0-5.5.8-7.8 2.3-2.6-3.9-7-6.5-12.1-6.5-.9 0-1.9.1-2.8.3.2-1.1.3-2.2.3-3.3 0-9.9-8-17.9-17.9-17.9-2.1 0-4.2.4-6.1 1.1-3-5.6-8.9-9.4-15.7-9.4-.5 0-1 0-1.5.1-.5 0-1-.1-1.5-.1-6.8 0-12.7 3.8-15.7 9.4-1.9-.7-3.9-1.1-6.1-1.1-9.7 0-17.6 7.7-17.9 17.3-.7-.1-1.4-.2-2.1-.2-6.3 0-11.7 4-13.8 9.6-.6 1.6-1 3.4-1 5.2 0 4 1.6 7.6 4.2 10.3-.5 1.2-.8 2.6-.8 4 0 6 4.9 10.9 10.9 10.9H402c6 0 10.9-4.9 10.9-10.9 0-1.4-.3-2.8-.8-4 2.9-2.7 4.5-6.3 4.5-10.3z"
-                  fill="#E6E9EE"></path>
-            <rect class="exhaust" fill="#6DDCBD" x="241" y="220" width="30" height="8"></rect>
-            <rect class="exhaust two" fill="#FF871C" x="245" y="231" width="20" height="9"></rect>
-            <rect class="exhaust__line" fill="#E6E9EE" x="252" y="240" width="7" height="70"></rect>
-            <path class="flame"
-                  d="M 6.7 1.14 l 2.8 4.7 s 1.3 3 -1.82 3.22 l -5.4 0 s -3.28 -.14 -1.74 -3.26 l 2.76 -4.7 s 1.7 -2.3 3.4 0 z"
-                  fill="#AA2247"></path>
-        </svg>
-    </div>
-    <h2>The install worked successfully! Congratulations!</h2>
-    <p>You are seeing this page because <a href="https://docs.djangoproject.com/en/2.1/ref/settings/#debug"
-                                           target="_blank" rel="noopener">DEBUG=True</a> is in your settings file and
-        you have not configured any URLs.</p>
-</main>
-<footer class="u-clearfix">
-    <a href="https://docs.djangoproject.com/en/2.1/" target="_blank" rel="noopener">
-        <div class="option one">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs>
-                    <path d="M0 0h24v24H0V0z" id="a"></path>
-                </defs>
-                <clipPath id="b">
-                    <use overflow="visible" xlink:href="#a"></use>
-                </clipPath>
-                <path clip-path="url(#b)"
-                      d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"></path>
-            </svg>
-            <div>
-                <h4>Django Documentation</h4>
-                <p>Topics, references, &amp; how-to's</p>
+{% extends 'base.html' %}
+{% block content %}
+<section class="w-all">
+    <nav class="mt20">
+        <ul class="clearfix">
+            <li><a href="https://www.zhetian.org" title="圣墟小说网首页"><i class="pticon pticon-home pticon-lg"></i> 圣墟小说网首页</a><i class="pticon pticon-angle-right icon"></i></li>
+            <li><a href="/over/" title="全本小说">全本小说</a></li>
+        </ul>
+    </nav>
+    <div class="container clearfix mt20">
+        <div class="w-left">
+            <div class="card">
+                <div class="header line">
+                    <h2>全本小说列表</h2>
+                </div>
+                <div class="body">
+                    <ul class="updatelist">
+                        <li class="headerhui">
+                            <span class="n">[<a href="/sort/xianxia.html" title="仙侠小说">仙侠</a>]&nbsp;&nbsp;<a href="/22347/" title="道门法则" target="_blank"><strong>道门法则</strong></a></span>
+                            <span class="c"><a href="/22347/736.html" title="道门法则 第三十章 进一步合作" target="_blank">第三十章 进一步合作</a></span>
+                            <span class="a"><a href="/author/%E5%85%AB%E5%AE%9D%E9%A5%AD/" title="八宝饭 作品列表" target="_blank">八宝饭</a></span>
+                            <span class="t">10-29 18:53</span>
+                            <div class="clear"></div>
+                        </li>
+                        <li class="headerhui">
+                            <span class="n">[<a href="/sort/kehuan.html" title="科幻小说">科幻</a>]&nbsp;&nbsp;<a href="/153/" title="人间冰器" target="_blank"><strong>人间冰器</strong></a></span>
+                            <span class="c"><a href="/153/1049.html" title="人间冰器 第一千零一十二章 冷夜消失了？好神奇啊" target="_blank">第一千零一十二章 冷夜消失了？好神奇啊</a></span>
+                            <span class="a"><a href="/author/%E9%98%9A%E6%99%BA/" title="阚智 作品列表" target="_blank">阚智</a></span>
+                            <span class="t">10-29 13:17</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/20804/" title="龙零" target="_blank"><strong>龙零</strong></a></span>
+                            <span class="c"><a href="/20804/1822.html" title="龙零 第一千八百零二章 八路合围" target="_blank">第一千八百零二章 八路合围</a></span>
+                            <span class="a"><a href="/author/%E5%94%90%E5%B0%B8%E5%8F%81%E6%91%86%E9%A6%96/" title="唐尸叁摆首 作品列表" target="_blank">唐尸叁摆首</a></span>
+                            <span class="t">10-29 12:57</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/20455/" title="注视深渊" target="_blank"><strong>注视深渊</strong></a></span>
+                            <span class="c"><a href="/20455/631.html" title="注视深渊 44.要做一些微小工作的牧苏" target="_blank">44.要做一些微小工作的牧苏</a></span>
+                            <span class="a"><a href="/author/%E5%90%BE%E5%8D%B3%E6%AD%A3%E9%81%93/" title="吾即正道 作品列表" target="_blank">吾即正道</a></span>
+                            <span class="t">10-29 12:20</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/lishi.html" title="历史小说">历史</a>]&nbsp;&nbsp;<a href="/2353/" title="我当道士那些年" target="_blank"><strong>我当道士那些年</strong></a></span>
+                            <span class="c"><a href="/2353/1576.html" title="我当道士那些年 第1006章 我们的船" target="_blank">第1006章 我们的船</a></span>
+                            <span class="a"><a href="/author/%E4%BB%90%E4%B8%89/" title="仐三 作品列表" target="_blank">仐三</a></span>
+                            <span class="t">10-29 10:40</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/2477/" title="帝临鸿蒙" target="_blank"><strong>帝临鸿蒙</strong></a></span>
+                            <span class="c"><a href="/2477/2640.html" title="帝临鸿蒙 第两千六百一十四章 一些真相，并未陨落" target="_blank">第两千六百一十四章 一些真相，并未陨落</a></span>
+                            <span class="a"><a href="/author/%E4%B8%BA%E5%B0%B9%E6%9F%93%E5%A2%A8%E7%BA%A2%E5%B0%98/" title="为尹染墨红尘 作品列表" target="_blank">为尹染墨红尘</a></span>
+                            <span class="t">10-28 22:41</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/29190/" title="我家徒弟又挂了" target="_blank"><strong>我家徒弟又挂了</strong></a></span>
+                            <span class="c"><a href="/29190/393.html" title="我家徒弟又挂了 第四一零章 最后的最后" target="_blank">第四一零章 最后的最后</a></span>
+                            <span class="a"><a href="/author/%E5%B0%A4%E5%89%8D/" title="尤前 作品列表" target="_blank">尤前</a></span>
+                            <span class="t">10-28 15:07</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/kehuan.html" title="科幻小说">科幻</a>]&nbsp;&nbsp;<a href="/29158/" title="末世女配的逆袭" target="_blank"><strong>末世女配的逆袭</strong></a></span>
+                            <span class="c"><a href="/29158/192.html" title="末世女配的逆袭 完结感言" target="_blank">完结感言</a></span>
+                            <span class="a"><a href="/author/%E6%B4%9B%E5%A2%93/" title="洛墓 作品列表" target="_blank">洛墓</a></span>
+                            <span class="t">10-27 19:57</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/24300/" title="官妖" target="_blank"><strong>官妖</strong></a></span>
+                            <span class="c"><a href="/24300/2191.html" title="官妖 第2299章 坚决执行" target="_blank">第2299章 坚决执行</a></span>
+                            <span class="a"><a href="/author/%E4%B8%81%E5%85%AC%E5%AD%90/" title="丁公子 作品列表" target="_blank">丁公子</a></span>
+                            <span class="t">10-27 17:12</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/29135/" title="香艳" target="_blank"><strong>香艳</strong></a></span>
+                            <span class="c"><a href="/29135/166.html" title="香艳 第166章 新书《合欢铃》正式连载。" target="_blank">第166章 新书《合欢铃》正式连载。</a></span>
+                            <span class="a"><a href="/author/%E9%80%A0%E5%8F%8D/" title="造反 作品列表" target="_blank">造反</a></span>
+                            <span class="t">10-26 23:55</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/24281/" title="画魂" target="_blank"><strong>画魂</strong></a></span>
+                            <span class="c"><a href="/24281/698.html" title="画魂 第七百三十四章 流霞云海" target="_blank">第七百三十四章 流霞云海</a></span>
+                            <span class="a"><a href="/author/%E7%A9%86%E9%A3%9E%E8%8A%B1/" title="穆飞花 作品列表" target="_blank">穆飞花</a></span>
+                            <span class="t">10-26 09:06</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/29087/" title="穿越之养儿不易" target="_blank"><strong>穿越之养儿不易</strong></a></span>
+                            <span class="c"><a href="/29087/403.html" title="穿越之养儿不易 清泉发新书了" target="_blank">清泉发新书了</a></span>
+                            <span class="a"><a href="/author/%E5%AF%82%E5%AF%9E%E7%9A%84%E6%B8%85%E6%B3%89/" title="寂寞的清泉 作品列表" target="_blank">寂寞的清泉</a></span>
+                            <span class="t">10-25 08:51</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/29041/" title="血色激昂的岁月" target="_blank"><strong>血色激昂的岁月</strong></a></span>
+                            <span class="c"><a href="/29041/757.html" title="血色激昂的岁月 第743章，大结局（二）" target="_blank">第743章，大结局（二）</a></span>
+                            <span class="a"><a href="/author/%E5%B0%81%E6%97%97%E5%8D%B0%E8%BD%A9/" title="封旗印轩 作品列表" target="_blank">封旗印轩</a></span>
+                            <span class="t">10-23 11:03</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/1588/" title="丹天战神" target="_blank"><strong>丹天战神</strong></a></span>
+                            <span class="c"><a href="/1588/1664.html" title="丹天战神 完本感言" target="_blank">完本感言</a></span>
+                            <span class="a"><a href="/author/%E5%B9%BB%E9%BE%99%E7%8B%AC%E8%88%9E/" title="幻龙独舞 作品列表" target="_blank">幻龙独舞</a></span>
+                            <span class="t">10-22 16:51</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/dushi.html" title="都市小说">都市</a>]&nbsp;&nbsp;<a href="/29033/" title="医妃权倾天下" target="_blank"><strong>医妃权倾天下</strong></a></span>
+                            <span class="c"><a href="/29033/1008.html" title="医妃权倾天下 萧子安番外" target="_blank">萧子安番外</a></span>
+                            <span class="a"><a href="/author/%E6%89%BF%E4%B9%9D/" title="承九 作品列表" target="_blank">承九</a></span>
+                            <span class="t">10-22 16:07</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/dushi.html" title="都市小说">都市</a>]&nbsp;&nbsp;<a href="/29022/" title="儿女成双福满堂" target="_blank"><strong>儿女成双福满堂</strong></a></span>
+                            <span class="c"><a href="/29022/627.html" title="儿女成双福满堂 番外 那一年,茅舍竹篱人面桃花" target="_blank">番外 那一年,茅舍竹篱人面桃花</a></span>
+                            <span class="a"><a href="/author/%E7%BA%A2%E7%B2%9F/" title="红粟 作品列表" target="_blank">红粟</a></span>
+                            <span class="t">10-22 06:27</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/lishi.html" title="历史小说">历史</a>]&nbsp;&nbsp;<a href="/2395/" title="喜劫良缘，纨绔俏医妃" target="_blank"><strong>喜劫良缘，纨绔俏医妃</strong></a></span>
+                            <span class="c"><a href="/2395/2506.html" title="喜劫良缘，纨绔俏医妃 尾声：一定会有好兆头的" target="_blank">尾声：一定会有好兆头的</a></span>
+                            <span class="a"><a href="/author/%E8%8E%89%E8%8E%89%E8%96%87/" title="莉莉薇 作品列表" target="_blank">莉莉薇</a></span>
+                            <span class="t">10-21 04:04</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/lishi.html" title="历史小说">历史</a>]&nbsp;&nbsp;<a href="/27129/" title="云霄之君临天下" target="_blank"><strong>云霄之君临天下</strong></a></span>
+                            <span class="c"><a href="/27129/830.html" title="云霄之君临天下 0393章 边关之战【18】" target="_blank">0393章 边关之战【18】</a></span>
+                            <span class="a"><a href="/author/%E6%97%A0%E4%BA%A7%E8%80%85/" title="无产者 作品列表" target="_blank">无产者</a></span>
+                            <span class="t">10-20 20:28</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/kehuan.html" title="科幻小说">科幻</a>]&nbsp;&nbsp;<a href="/32/" title="超级基因优化液" target="_blank"><strong>超级基因优化液</strong></a></span>
+                            <span class="c"><a href="/32/1658.html" title="超级基因优化液 第一千六百三十一章 赤炎魔王斯坦利 重伤！" target="_blank">第一千六百三十一章 赤炎魔王斯坦利 重伤！</a></span>
+                            <span class="a"><a href="/author/%E7%A7%92%E9%80%9F%E4%B9%9D%E5%85%89%E5%B9%B4/" title="秒速九光年 作品列表" target="_blank">秒速九光年</a></span>
+                            <span class="t">10-19 20:21</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/tongren.html" title="同人小说">同人</a>]&nbsp;&nbsp;<a href="/28980/" title="雍正小老婆" target="_blank"><strong>雍正小老婆</strong></a></span>
+                            <span class="c"><a href="/28980/1291.html" title="雍正小老婆 第一千二百九十二章 爱你依旧（大结局）" target="_blank">第一千二百九十二章 爱你依旧（大结局）</a></span>
+                            <span class="a"><a href="/author/%E5%87%A4%E8%BD%BB%E8%BD%BB/" title="凤轻轻 作品列表" target="_blank">凤轻轻</a></span>
+                            <span class="t">10-19 06:26</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/lishi.html" title="历史小说">历史</a>]&nbsp;&nbsp;<a href="/23909/" title="木槿花西月锦绣" target="_blank"><strong>木槿花西月锦绣</strong></a></span>
+                            <span class="c"><a href="/23909/333.html" title="木槿花西月锦绣 第335章 番外明日香（3）" target="_blank">第335章 番外明日香（3）</a></span>
+                            <span class="a"><a href="/author/%E6%B5%B7%E9%A3%98%E9%9B%AA/" title="海飘雪 作品列表" target="_blank">海飘雪</a></span>
+                            <span class="t">10-19 06:26</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28930/" title="危宫惊梦" target="_blank"><strong>危宫惊梦</strong></a></span>
+                            <span class="c"><a href="/28930/133.html" title="危宫惊梦 133、番外 葛竹马篇 不喜勿入" target="_blank">133、番外 葛竹马篇 不喜勿入</a></span>
+                            <span class="a"><a href="/author/%E7%8B%82%E4%B8%8A%E5%8A%A0%E7%8B%82/" title="狂上加狂 作品列表" target="_blank">狂上加狂</a></span>
+                            <span class="t">10-19 06:26</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28686/" title="后宫升级记" target="_blank"><strong>后宫升级记</strong></a></span>
+                            <span class="c"><a href="/28686/192.html" title="后宫升级记 192、【番外】皇上番外 后续番外" target="_blank">192、【番外】皇上番外 后续番外</a></span>
+                            <span class="a"><a href="/author/%E6%B0%B4%E5%BF%83%E6%B8%85%E6%B9%84/" title="水心清湄 作品列表" target="_blank">水心清湄</a></span>
+                            <span class="t">10-19 06:26</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/26616/" title="山河表里" target="_blank"><strong>山河表里</strong></a></span>
+                            <span class="c"><a href="/26616/77.html" title="山河表里 77、完" target="_blank">77、完</a></span>
+                            <span class="a"><a href="/author/priest/" title="priest 作品列表" target="_blank">priest</a></span>
+                            <span class="t">10-19 06:25</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/tongren.html" title="同人小说">同人</a>]&nbsp;&nbsp;<a href="/28515/" title="图谋不轨" target="_blank"><strong>图谋不轨</strong></a></span>
+                            <span class="c"><a href="/28515/101.html" title="图谋不轨 第115章 番外 三：沈思安" target="_blank">第115章 番外 三：沈思安</a></span>
+                            <span class="a"><a href="/author/%E9%9D%92%E6%A0%91%E9%98%BF%E7%A6%8F/" title="青树阿福 作品列表" target="_blank">青树阿福</a></span>
+                            <span class="t">10-19 06:25</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28782/" title="嫡女为妃" target="_blank"><strong>嫡女为妃</strong></a></span>
+                            <span class="c"><a href="/28782/119.html" title="嫡女为妃 117、118" target="_blank">117、118</a></span>
+                            <span class="a"><a href="/author/%E7%A5%88%E5%AE%B9/" title="祈容 作品列表" target="_blank">祈容</a></span>
+                            <span class="t">10-19 06:25</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/dushi.html" title="都市小说">都市</a>]&nbsp;&nbsp;<a href="/28967/" title="校园狂少" target="_blank"><strong>校园狂少</strong></a></span>
+                            <span class="c"><a href="/28967/616.html" title="校园狂少 第五百五十六章 两次婚礼（大结局）" target="_blank">第五百五十六章 两次婚礼（大结局）</a></span>
+                            <span class="a"><a href="/author/%E5%B7%85%E5%B3%B0%E7%9A%84%E7%A5%9E/" title="巅峰的神 作品列表" target="_blank">巅峰的神</a></span>
+                            <span class="t">10-18 06:31</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28966/" title="御宠医妃" target="_blank"><strong>御宠医妃</strong></a></span>
+                            <span class="c"><a href="/28966/357.html" title="御宠医妃 坑深293米" target="_blank">坑深293米</a></span>
+                            <span class="a"><a href="/author/%E5%A7%92%E9%94%A6/" title="姒锦 作品列表" target="_blank">姒锦</a></span>
+                            <span class="t">10-18 06:31</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/dushi.html" title="都市小说">都市</a>]&nbsp;&nbsp;<a href="/27506/" title="重生之完美一生" target="_blank"><strong>重生之完美一生</strong></a></span>
+                            <span class="c"><a href="/27506/546.html" title="重生之完美一生 第五百一十章 大结局" target="_blank">第五百一十章 大结局</a></span>
+                            <span class="a"><a href="/author/%E5%AD%93%E6%97%A0%E6%88%91/" title="孓无我 作品列表" target="_blank">孓无我</a></span>
+                            <span class="t">10-18 06:31</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28956/" title="锦此一生" target="_blank"><strong>锦此一生</strong></a></span>
+                            <span class="c"><a href="/28956/519.html" title="锦此一生 拍砖说明" target="_blank">拍砖说明</a></span>
+                            <span class="a"><a href="/author/%E5%AD%9F%E5%AF%BB/" title="孟寻 作品列表" target="_blank">孟寻</a></span>
+                            <span class="t">10-18 06:30</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/tongren.html" title="同人小说">同人</a>]&nbsp;&nbsp;<a href="/28938/" title="六夫皆妖" target="_blank"><strong>六夫皆妖</strong></a></span>
+                            <span class="c"><a href="/28938/1240.html" title="六夫皆妖 1241 大结局：新的开始" target="_blank">1241 大结局：新的开始</a></span>
+                            <span class="a"><a href="/author/%E5%80%BE%E4%BA%91%E4%B9%8B%E6%81%8B/" title="倾云之恋 作品列表" target="_blank">倾云之恋</a></span>
+                            <span class="t">10-17 06:02</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28935/" title="重生炮灰农村媳" target="_blank"><strong>重生炮灰农村媳</strong></a></span>
+                            <span class="c"><a href="/28935/487.html" title="重生炮灰农村媳 第418章：有缘（番外四）" target="_blank">第418章：有缘（番外四）</a></span>
+                            <span class="a"><a href="/author/%E5%85%AB%E5%8C%B9/" title="八匹 作品列表" target="_blank">八匹</a></span>
+                            <span class="t">10-17 06:02</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28929/" title="一品仙娇" target="_blank"><strong>一品仙娇</strong></a></span>
+                            <span class="c"><a href="/28929/1058.html" title="一品仙娇 第一零五八章 大结局（下）" target="_blank">第一零五八章 大结局（下）</a></span>
+                            <span class="a"><a href="/author/%E6%96%87%E9%A3%98%E8%BF%87%E5%B3%B0/" title="文飘过峰 作品列表" target="_blank">文飘过峰</a></span>
+                            <span class="t">10-17 06:02</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/29/" title="杀神" target="_blank"><strong>杀神</strong></a></span>
+                            <span class="c"><a href="/29/1711.html" title="杀神 新书《灵域》已经上传,请大家继续支持~~" target="_blank">新书《灵域》已经上传,请大家继续支持~~</a></span>
+                            <span class="a"><a href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/" title="逆苍天 作品列表" target="_blank">逆苍天</a></span>
+                            <span class="t">10-17 06:01</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/27606/" title="后来，他成了御用奶妈" target="_blank"><strong>后来，他成了御用奶妈</strong></a></span>
+                            <span class="c"><a href="/27606/140.html" title="后来，他成了御用奶妈 140、第一百四十章" target="_blank">140、第一百四十章</a></span>
+                            <span class="a"><a href="/author/%E8%89%B3%E5%BD%92%E5%BA%B7/" title="艳归康 作品列表" target="_blank">艳归康</a></span>
+                            <span class="t">10-16 06:23</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/youxi.html" title="游戏小说">游戏</a>]&nbsp;&nbsp;<a href="/28892/" title="豪门童养媳" target="_blank"><strong>豪门童养媳</strong></a></span>
+                            <span class="c"><a href="/28892/678.html" title="豪门童养媳 671 错位的时光之恋——没羞没臊的表白" target="_blank">671 错位的时光之恋——没羞没臊的表白</a></span>
+                            <span class="a"><a href="/author/%E5%85%AD%E6%9C%88%E5%A5%B3%E7%8E%8B/" title="六月女王 作品列表" target="_blank">六月女王</a></span>
+                            <span class="t">10-14 06:11</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/tongren.html" title="同人小说">同人</a>]&nbsp;&nbsp;<a href="/28880/" title="庶女有毒" target="_blank"><strong>庶女有毒</strong></a></span>
+                            <span class="c"><a href="/28880/301.html" title="庶女有毒 花好月圆" target="_blank">花好月圆</a></span>
+                            <span class="a"><a href="/author/%E7%A7%A6%E7%AE%80/" title="秦简 作品列表" target="_blank">秦简</a></span>
+                            <span class="t">10-13 05:54</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28866/" title="末世重生女配翻身" target="_blank"><strong>末世重生女配翻身</strong></a></span>
+                            <span class="c"><a href="/28866/484.html" title="末世重生女配翻身 完本感言" target="_blank">完本感言</a></span>
+                            <span class="a"><a href="/author/%E5%B9%B4%E5%8D%8E/" title="年华 作品列表" target="_blank">年华</a></span>
+                            <span class="t">10-11 05:55</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/tongren.html" title="同人小说">同人</a>]&nbsp;&nbsp;<a href="/18160/" title="我的军阀生涯" target="_blank"><strong>我的军阀生涯</strong></a></span>
+                            <span class="c"><a href="/18160/940.html" title="我的军阀生涯 第七百零六章 大结局" target="_blank">第七百零六章 大结局</a></span>
+                            <span class="a"><a href="/author/%E5%8D%83%E6%96%A4%E9%A1%B6/" title="千斤顶 作品列表" target="_blank">千斤顶</a></span>
+                            <span class="t">10-10 05:18</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/dushi.html" title="都市小说">都市</a>]&nbsp;&nbsp;<a href="/28853/" title="二号首长全集" target="_blank"><strong>二号首长全集</strong></a></span>
+                            <span class="c"><a href="/28853/567.html" title="二号首长全集 第144章" target="_blank">第144章</a></span>
+                            <span class="a"><a href="/author/%E9%BB%84%E6%99%93%E9%98%B3/" title="黄晓阳 作品列表" target="_blank">黄晓阳</a></span>
+                            <span class="t">10-09 16:41</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/28838/" title="邪气凛然" target="_blank"><strong>邪气凛然</strong></a></span>
+                            <span class="c"><a href="/28838/599.html" title="邪气凛然 第一百三十七章 大结局（下）" target="_blank">第一百三十七章 大结局（下）</a></span>
+                            <span class="a"><a href="/author/%E8%B7%B3%E8%88%9E/" title="跳舞 作品列表" target="_blank">跳舞</a></span>
+                            <span class="t">10-08 13:21</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/604/" title="斗破苍穹" target="_blank"><strong>斗破苍穹</strong></a></span>
+                            <span class="c"><a href="/604/1692.html" title="斗破苍穹 关于离开" target="_blank">关于离开</a></span>
+                            <span class="a"><a href="/author/%E5%A4%A9%E8%9A%95%E5%9C%9F%E8%B1%86/" title="天蚕土豆 作品列表" target="_blank">天蚕土豆</a></span>
+                            <span class="t">10-08 02:51</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28804/" title="村姑重生逆转人生" target="_blank"><strong>村姑重生逆转人生</strong></a></span>
+                            <span class="c"><a href="/28804/187.html" title="村姑重生逆转人生 第一百八十九章 大结局" target="_blank">第一百八十九章 大结局</a></span>
+                            <span class="a"><a href="/author/%E7%A8%BB%E8%8D%89%E9%87%8C%E7%9A%84%E9%BA%A6%E7%94%B0/" title="稻草里的麦田 作品列表" target="_blank">稻草里的麦田</a></span>
+                            <span class="t">10-06 12:59</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/28797/" title="体尊" target="_blank"><strong>体尊</strong></a></span>
+                            <span class="c"><a href="/28797/938.html" title="体尊 第938章 结局（2）" target="_blank">第938章 结局（2）</a></span>
+                            <span class="a"><a href="/author/%E6%B1%89%E9%9A%B6/" title="汉隶 作品列表" target="_blank">汉隶</a></span>
+                            <span class="t">10-06 12:59</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28769/" title="白莲攻略" target="_blank"><strong>白莲攻略</strong></a></span>
+                            <span class="c"><a href="/28769/612.html" title="白莲攻略 陆晔番外之画地为牢" target="_blank">陆晔番外之画地为牢</a></span>
+                            <span class="a"><a href="/author/%E5%92%B8%E5%AE%A2/" title="咸客 作品列表" target="_blank">咸客</a></span>
+                            <span class="t">10-05 02:24</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28768/" title="娇妾" target="_blank"><strong>娇妾</strong></a></span>
+                            <span class="c"><a href="/28768/96.html" title="娇妾 96、番外九" target="_blank">96、番外九</a></span>
+                            <span class="a"><a href="/author/%E4%B8%9C%E6%96%BD%E5%A8%98/" title="东施娘 作品列表" target="_blank">东施娘</a></span>
+                            <span class="t">10-05 02:24</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/28759/" title="鸿蒙至尊道" target="_blank"><strong>鸿蒙至尊道</strong></a></span>
+                            <span class="c"><a href="/28759/340.html" title="鸿蒙至尊道 第三百三十九章 杀戮结束（大结局）" target="_blank">第三百三十九章 杀戮结束（大结局）</a></span>
+                            <span class="a"><a href="/author/%E5%A4%A9%E7%85%9E%E8%A1%80%E5%B0%91/" title="天煞血少 作品列表" target="_blank">天煞血少</a></span>
+                            <span class="t">10-05 02:24</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/youxi.html" title="游戏小说">游戏</a>]&nbsp;&nbsp;<a href="/2603/" title="网游之修罗传说" target="_blank"><strong>网游之修罗传说</strong></a></span>
+                            <span class="c"><a href="/2603/749.html" title="网游之修罗传说 火星的网游新作" target="_blank">火星的网游新作</a></span>
+                            <span class="a"><a href="/author/%E7%81%AB%E6%98%9F%E5%BC%95%E5%8A%9B/" title="火星引力 作品列表" target="_blank">火星引力</a></span>
+                            <span class="t">10-05 02:24</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/xuanhuan.html" title="玄幻小说">玄幻</a>]&nbsp;&nbsp;<a href="/28729/" title="史上最强闲人" target="_blank"><strong>史上最强闲人</strong></a></span>
+                            <span class="c"><a href="/28729/690.html" title="史上最强闲人 第690章 老板娘等着我（大结局）" target="_blank">第690章 老板娘等着我（大结局）</a></span>
+                            <span class="a"><a href="/author/%E5%90%BE%E8%AF%AD/" title="吾语 作品列表" target="_blank">吾语</a></span>
+                            <span class="t">10-04 02:36</span>
+                            <div class="clear"></div>
+                        </li>
+                                                <li class="headerhui">
+                            <span class="n">[<a href="/sort/nvsheng.html" title="女生小说">女生</a>]&nbsp;&nbsp;<a href="/28720/" title="史上第一宠婚" target="_blank"><strong>史上第一宠婚</strong></a></span>
+                            <span class="c"><a href="/28720/205.html" title="史上第一宠婚 059米 女干夫浮出水面．" target="_blank">059米 女干夫浮出水面．</a></span>
+                            <span class="a"><a href="/author/%E5%A7%92%E9%94%A6/" title="姒锦 作品列表" target="_blank">姒锦</a></span>
+                            <span class="t">10-04 01:01</span>
+                            <div class="clear"></div>
+                        </li>
+                                            </ul>
+                </div>
+                <div class="footer pagination">
+                                                            <span>共20页 955条</span>
+                    <a href="/over/1.html" class="first number">&lt;&lt;</a>
+                    <a href="/over/1.html" class="prev number">&lt;</a>
+                                                            <a class="current" href="javascript:;">1</a>
+                                                                                <a href="/over/2.html" class="number">2</a>
+                                                                                <a href="/over/3.html" class="number">3</a>
+                                                                                <a href="/over/4.html" class="number">4</a>
+                                                                                <a href="/over/5.html" class="number">5</a>
+                                                                                <a href="/over/6.html" class="number">6</a>
+                                                                                <a href="/over/7.html" class="number">7</a>
+                                                            <a href="/over/2.html" class="next number">&gt;</a>
+                    <a href="/over/20.html" class="last number">&gt;&gt;</a>
+                                    </div>
             </div>
         </div>
-    </a>
-    <a href="https://docs.djangoproject.com/en/2.1/intro/tutorial01/" target="_blank" rel="noopener">
-        <div class="option two">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0h24v24H0V0z" fill="none"></path>
-                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"></path>
-            </svg>
-            <div>
-                <h4>Tutorial: A Polling App</h4>
-                <p>Get started with Django</p>
+        <div class="w-right">
+            <div class="card">
+                <div class="header line">
+                    <h3>小说排行</h3>
+                </div>
+                <div class="body">
+                    <ul class="toplist clearfix">
+                                                                        <li><a href="/top/postdate.html" title="入库时间">入库时间</a></li>
+                                                <li><a href="/top/lastupdate.html" title="最新更新">最新更新</a></li>
+                                                <li><a href="/top/dayvisit.html" title="日点击">日点击</a></li>
+                                                <li><a href="/top/weekvisit.html" title="周点击">周点击</a></li>
+                                                <li><a href="/top/monthvisit.html" title="月点击">月点击</a></li>
+                                                <li><a href="/top/allvisit.html" title="总点击">总点击</a></li>
+                                                <li><a href="/top/marknum.html" title="收藏数">收藏数</a></li>
+                                                <li><a href="/top/votenum.html" title="推荐数">推荐数</a></li>
+                                                <li><a href="/top/downnum.html" title="下载数">下载数</a></li>
+                                            </ul>
+                </div>
+            </div>
+            <div class="card mt20">
+                <div class="header">
+                    <h3>本月热门</h3>
+                </div>
+                <div class="body">
+                    <ul class="rightlist">
+                                                                        <li><i class="first">1</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/1361/" title="圣墟">圣墟</a></li>
+                                                <li><i class="first">2</i><span><a href="/author/%E8%8E%AB%E9%BB%98/" title="莫默 作品大全">莫默</a></span><a href="/94/" title="武炼巅峰">武炼巅峰</a></li>
+                                                <li><i class="first">3</i><span><a href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/" title="逆苍天 作品大全">逆苍天</a></span><a href="/29/" title="杀神">杀神</a></li>
+                                                <li><i>4</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/148/" title="完美世界">完美世界</a></li>
+                                                <li><i>5</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/12/" title="遮天">遮天</a></li>
+                                                <li><i>6</i><span><a href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/" title="鱼人二代 作品大全">鱼人二代</a></span><a href="/38/" title="校花的贴身高手">校花的贴身高手</a></li>
+                                                <li><i>7</i><span><a href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/" title="风凌天下 作品大全">风凌天下</a></span><a href="/26/" title="傲世九重天">傲世九重天</a></li>
+                                                <li><i>8</i><span><a href="/author/%E6%88%91%E5%90%83%E8%A5%BF%E7%BA%A2%E6%9F%BF/" title="我吃西红柿 作品大全">我吃西红柿</a></span><a href="/96/" title="莽荒纪">莽荒纪</a></li>
+                                                <li><i>9</i><span><a href="/author/%E5%94%90%E5%AE%B6%E4%B8%89%E5%B0%91/" title="唐家三少 作品大全">唐家三少</a></span><a href="/88/" title="绝世唐门">绝世唐门</a></li>
+                                                <li><i>10</i><span><a href="/author/%E8%8A%B1%E9%83%BD%E5%A4%A7%E5%B0%91/" title="花都大少 作品大全">花都大少</a></span><a href="/408/" title="极品全能学生">极品全能学生</a></li>
+                                                <li><i>11</i><span><a href="/author/%E8%9B%87%E5%8F%91%E4%BC%98%E9%9B%85/" title="蛇发优雅 作品大全">蛇发优雅</a></span><a href="/2864/" title="神医弃女：邪王霸爱小狂妃">神医弃女：邪王霸爱小狂妃</a></li>
+                                                <li><i>12</i><span><a href="/author/%E5%A4%A9%E8%9A%95%E5%9C%9F%E8%B1%86/" title="天蚕土豆 作品大全">天蚕土豆</a></span><a href="/14/" title="武动乾坤">武动乾坤</a></li>
+                                                <li><i>13</i><span><a href="/author/%E9%BB%84%E9%87%91%E6%88%98%E5%A3%AB/" title="黄金战士 作品大全">黄金战士</a></span><a href="/42/" title="重生之妖孽人生">重生之妖孽人生</a></li>
+                                                <li><i>14</i><span><a href="/author/%E5%AD%A4%E5%8D%95%E5%9C%B0%E9%A3%9E/" title="孤单地飞 作品大全">孤单地飞</a></span><a href="/466/" title="神道丹尊">神道丹尊</a></li>
+                                                <li><i>15</i><span><a href="/author/%E7%A6%B9%E6%9E%AB/" title="禹枫 作品大全">禹枫</a></span><a href="/210/" title="武神天下">武神天下</a></li>
+                                            </ul>
+                </div>
+            </div>
+            <div class="card mt20">
+                <div class="header">
+                    <h3>本周热门</h3>
+                </div>
+                <div class="body">
+                    <ul class="rightlist">
+                                                                        <li><i class="first">1</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/1361/" title="圣墟">圣墟</a></li>
+                                                <li><i class="first">2</i><span><a href="/author/%E8%8E%AB%E9%BB%98/" title="莫默 作品大全">莫默</a></span><a href="/94/" title="武炼巅峰">武炼巅峰</a></li>
+                                                <li><i class="first">3</i><span><a href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/" title="逆苍天 作品大全">逆苍天</a></span><a href="/29/" title="杀神">杀神</a></li>
+                                                <li><i>4</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/148/" title="完美世界">完美世界</a></li>
+                                                <li><i>5</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/12/" title="遮天">遮天</a></li>
+                                                <li><i>6</i><span><a href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/" title="鱼人二代 作品大全">鱼人二代</a></span><a href="/38/" title="校花的贴身高手">校花的贴身高手</a></li>
+                                                <li><i>7</i><span><a href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/" title="风凌天下 作品大全">风凌天下</a></span><a href="/26/" title="傲世九重天">傲世九重天</a></li>
+                                                <li><i>8</i><span><a href="/author/%E6%88%91%E5%90%83%E8%A5%BF%E7%BA%A2%E6%9F%BF/" title="我吃西红柿 作品大全">我吃西红柿</a></span><a href="/96/" title="莽荒纪">莽荒纪</a></li>
+                                                <li><i>9</i><span><a href="/author/%E5%94%90%E5%AE%B6%E4%B8%89%E5%B0%91/" title="唐家三少 作品大全">唐家三少</a></span><a href="/88/" title="绝世唐门">绝世唐门</a></li>
+                                                <li><i>10</i><span><a href="/author/%E8%8A%B1%E9%83%BD%E5%A4%A7%E5%B0%91/" title="花都大少 作品大全">花都大少</a></span><a href="/408/" title="极品全能学生">极品全能学生</a></li>
+                                                <li><i>11</i><span><a href="/author/%E8%9B%87%E5%8F%91%E4%BC%98%E9%9B%85/" title="蛇发优雅 作品大全">蛇发优雅</a></span><a href="/2864/" title="神医弃女：邪王霸爱小狂妃">神医弃女：邪王霸爱小狂妃</a></li>
+                                                <li><i>12</i><span><a href="/author/%E5%A4%A9%E8%9A%95%E5%9C%9F%E8%B1%86/" title="天蚕土豆 作品大全">天蚕土豆</a></span><a href="/14/" title="武动乾坤">武动乾坤</a></li>
+                                                <li><i>13</i><span><a href="/author/%E9%BB%84%E9%87%91%E6%88%98%E5%A3%AB/" title="黄金战士 作品大全">黄金战士</a></span><a href="/42/" title="重生之妖孽人生">重生之妖孽人生</a></li>
+                                                <li><i>14</i><span><a href="/author/%E5%AD%A4%E5%8D%95%E5%9C%B0%E9%A3%9E/" title="孤单地飞 作品大全">孤单地飞</a></span><a href="/466/" title="神道丹尊">神道丹尊</a></li>
+                                                <li><i>15</i><span><a href="/author/%E7%A6%B9%E6%9E%AB/" title="禹枫 作品大全">禹枫</a></span><a href="/210/" title="武神天下">武神天下</a></li>
+                                            </ul>
+                </div>
+            </div>
+            <div class="card mt20">
+                <div class="header line">
+                    <h3>最新入库</h3>
+                </div>
+                <div class="body">
+                    <ul class="rightlist">
+                                                                        <li><i class="first">1</i><span>10-29</span><a href="/29258/" title="我的绝色武神老婆">我的绝色武神老婆</a></li>
+                                                <li><i class="first">2</i><span>10-29</span><a href="/29257/" title="女皇撩夫记">女皇撩夫记</a></li>
+                                                <li><i class="first">3</i><span>10-29</span><a href="/29256/" title="盛世宠爱：叶少的双面娇妻">盛世宠爱：叶少的双面娇妻</a></li>
+                                                <li><i>4</i><span>10-29</span><a href="/29255/" title="刁妃妖娆：撩个王爷偷个崽">刁妃妖娆：撩个王爷偷个崽</a></li>
+                                                <li><i>5</i><span>10-29</span><a href="/29254/" title="超级王者毒霸">超级王者毒霸</a></li>
+                                                <li><i>6</i><span>10-29</span><a href="/29253/" title="妖孽仙王都市行">妖孽仙王都市行</a></li>
+                                                <li><i>7</i><span>10-29</span><a href="/29252/" title="重生小甜妻：首席老公，别撩我">重生小甜妻：首席老公，别撩我</a></li>
+                                                <li><i>8</i><span>10-29</span><a href="/29251/" title="听说爱情会有回音">听说爱情会有回音</a></li>
+                                                <li><i>9</i><span>10-29</span><a href="/29250/" title="咸鱼的自救攻略">咸鱼的自救攻略</a></li>
+                                                <li><i>10</i><span>10-29</span><a href="/29249/" title="再战神探">再战神探</a></li>
+                                                <li><i>11</i><span>10-29</span><a href="/29248/" title="至尊神皇">至尊神皇</a></li>
+                                                <li><i>12</i><span>10-29</span><a href="/29247/" title="最强无敌熊孩纸">最强无敌熊孩纸</a></li>
+                                                <li><i>13</i><span>10-29</span><a href="/29246/" title="猛男诞生记">猛男诞生记</a></li>
+                                                <li><i>14</i><span>10-29</span><a href="/29245/" title="都市神豪之一夜暴富">都市神豪之一夜暴富</a></li>
+                                                <li><i>15</i><span>10-29</span><a href="/29244/" title="一线洞天">一线洞天</a></li>
+                                            </ul>
+                </div>
             </div>
         </div>
-    </a>
-    <a href="https://www.djangoproject.com/community/" target="_blank" rel="noopener">
-        <div class="option three">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M16.5 13c-1.2 0-3.07.34-4.5 1-1.43-.67-3.3-1-4.5-1C5.33 13 1 14.08 1 16.25V19h22v-2.75c0-2.17-4.33-3.25-6.5-3.25zm-4 4.5h-10v-1.25c0-.54 2.56-1.75 5-1.75s5 1.21 5 1.75v1.25zm9 0H14v-1.25c0-.46-.2-.86-.52-1.22.88-.3 1.96-.53 3.02-.53 2.44 0 5 1.21 5 1.75v1.25zM7.5 12c1.93 0 3.5-1.57 3.5-3.5S9.43 5 7.5 5 4 6.57 4 8.5 5.57 12 7.5 12zm0-5.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 5.5c1.93 0 3.5-1.57 3.5-3.5S18.43 5 16.5 5 13 6.57 13 8.5s1.57 3.5 3.5 3.5zm0-5.5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"></path>
-            </svg>
-            <div>
-                <h4>Django Community</h4>
-                <p>Connect, get help, or contribute</p>
-            </div>
-        </div>
-    </a>
-</footer>
-
-
-<div id="chrome_websiteIP" class="chrome_websiteIP_right">127.0.0.1</div>
-</body>
-</html>
+    </div>
+</section>
+{% endblock %}

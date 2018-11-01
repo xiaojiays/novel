@@ -19,5 +19,9 @@ from novel import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home),
+    path('register.html', views.register),
+    path('login.html', views.login),
     re_path(r'^list(-(?P<type>[a-zA-Z]+))?(-(?P<page>\d+))?\.html$', views.book_list),
+    re_path(r'^book-(?P<uid>\w+)\.html', views.book),
 ]
