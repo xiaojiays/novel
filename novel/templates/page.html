@@ -1,0 +1,15 @@
+<div class="footer pagination" style="font-size: 14px;">
+    <span>共{{ total_page }}页 {{ total }}条</span>
+    <a href="/" class="first number">&lt;&lt;</a>
+    <a href="{% ifequal page 1 %}/{% else %}list-{{page|add:-1}}.html{% endifequal %}" class="prev number">&lt;</a>
+    {% for p in pages %}
+    {% ifequal p page %}
+    <a class="current" href="javascript:;">{{p}}</a>
+    {% else %}
+    <a href="/list-{{p}}.html" class="number">{{p}}</a>
+    {% endifequal %}
+    {% endfor %}
+    <a href="{% ifequal page total_page %}list-{{total_page}}.html{% else %}list-{{page|add:1}}.html{% endifequal %}"
+       class="next number">&gt;</a>
+    <a href="/list-{{ total_page }}.html" class="last number">&gt;&gt;</a>
+</div>

@@ -1,12 +1,20 @@
 from django.db import models
-from novel.util import Util
+from xpinyin import Pinyin
 
 
 class Source(models.Model):
     name = models.CharField(max_length=30)
+    pinyin = models.CharField(max_length=150, default='', blank=True)
     website = models.CharField(max_length=100, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField()
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.pinyin is None or len(self.pinyin) == 0:
+            p = Pinyin()
+            self.pinyin = p.get_pinyin(self.name, '')
+        super(Source, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.name
@@ -14,8 +22,16 @@ class Source(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=20)
+    pinyin = models.CharField(max_length=50, default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField()
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.pinyin is None or len(self.pinyin) == 0:
+            p = Pinyin()
+            self.pinyin = p.get_pinyin(self.name, '')
+        super(Author, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.name
@@ -23,9 +39,17 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=10)
+    pinyin = models.CharField(max_length=50, default='', blank=True)
     status = models.IntegerField()
     parent_id = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.pinyin is None or len(self.pinyin) == 0:
+            p = Pinyin()
+            self.pinyin = p.get_pinyin(self.name, '')
+        super(Category, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.name
@@ -33,19 +57,21 @@ class Category(models.Model):
 
 class Book(models.Model):
     name = models.CharField(max_length=30)
+    pinyin = models.CharField(max_length=150, default='', blank=True)
     authors = models.ManyToManyField(Author)
     categories = models.ManyToManyField(Category)
-    uid = models.CharField(max_length=32, default='', blank=True)
     status = models.IntegerField()
     sources = models.ManyToManyField(Source)
     finish = models.BooleanField(default=False)
+    default = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        if self.uid is None or len(self.uid) == 0:
-            self.uid = Util.md5(self.name + str(self.created_at))
+        if self.pinyin is None or len(self.pinyin) == 0:
+            p = Pinyin()
+            self.pinyin = p.get_pinyin(self.name, '')
         super(Book, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
@@ -69,16 +95,9 @@ class Chapter(models.Model):
     book_id = models.IntegerField()
     link = models.CharField(max_length=500, default='')
     content_id = models.IntegerField(default=0)
-    uid = models.CharField(max_length=32, default='')
     number = models.IntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        if self.uid is None or len(self.uid) == 0:
-            self.uid = Util.md5(self.title + str(self.created_at))
-        super(Chapter, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.title

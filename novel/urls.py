@@ -18,10 +18,11 @@ from django.urls import path, re_path
 from novel import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('ad/min/', admin.site.urls),
     path('', views.home),
-    path('register.html', views.register),
-    path('login.html', views.login),
-    re_path(r'^list(-(?P<type>[a-zA-Z]+))?(-(?P<page>\d+))?\.html$', views.book_list),
-    re_path(r'^book-(?P<uid>\w+)\.html', views.book),
+    re_path(r'^list(-(?P<type>[a-zA-Z]+))?(-(?P<page>\d+))?\.html$', views.home),
+    re_path(r'^book/(?P<pinyin>\w+)\.html', views.book),
 ]
+
+handler404 = views.page_not_found
+handler500 = views.server_error
