@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    正在为您跳转到目标网站，如果没有跳转，请<a id="link" href="javascript:void(0);" onclick="openNewWindowNoreferrer(this, '{{ link }}')">点击前往</a>
+</body>
+<script type="text/javascript">
+    window.onload = function(){
+        document.getElementById("link").click();
+    }
+    function isIE() {
+        if (!!window.ActiveXObject || "ActiveXObject" in window)
+            return true;
+        else
+            return false;
+    }
+
+    function ieNorefererOpen(url, blankurl) {
+        var win = window.open(blankurl, '_blank');
+        var doc = win.document;
+        doc.clear();
+        doc.write('<html><head><meta http-equiv="Refresh" content="0; URL=' + url + '"/></head><body></body></html>');
+        doc.close();
+    }
+
+    function openNewWindowNoreferrer(a, full_link) {
+        if (isIE()) {
+            a.rel = "noreferrer";
+            a.target = "_self";
+            ieNorefererOpen(full_link);
+        } else {
+            a.rel = "noreferrer";
+            a.target = "_self";
+            a.href = full_link;
+        }
+    }
+</script>
+</html>

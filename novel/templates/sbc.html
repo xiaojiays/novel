@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="w-all">
+        <div class="card mt20 fulldir">
+            <div class="header line">
+                <h2>{{ book.name }} 章节列表（来源：{{ source.name }}）</h2>
+            </div>
+            <div class="body ">
+                <ul class="dirlist three clearfix">
+                    {% for chapter in chapters %}
+                    <li><a title="{{ book.name }} {{ chapter.title }}" href="/jump?link={{ chapter.link }}" target="_blank">{{ chapter.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock %}

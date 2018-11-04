@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, render
 from django.core.paginator import Paginator
 
-from novel.models import Book, Chapter
+from novel.models import Book, Chapter, Source
 from novel.util import Util
 from novel import settings
 
@@ -45,6 +45,9 @@ def get_data(b):
     item = {
         'pinyin': b.pinyin,
         'name': b.name,
+        'img': b.img,
+        'finish': b.finish,
+        'desc': b.description,
     }
     if category is not None:
         item.setdefault('category', category)
@@ -87,12 +90,70 @@ def book(request, *args, **kwargs):
     if b is None:
         return page_not_found(request)
 
+    data = get_data(b)
+    chapters = get_chapters(b)
     params = {
-        'book': b,
-        'settings': settings
+        'data': data,
+        'settings': settings,
+        'chapters': chapters,
     }
 
     return render_to_response('book.html', params)
+
+
+def get_chapters(b):
+    chapters = Chapter.objects.filter(book_id=b.id).order_by('-id').all()[:20]
+    if len(chapters) == 0:
+        return []
+
+    res = []
+    sources = {}
+    for chapter in chapters:
+        source = sources.get(chapter.source_id)
+        if source is None:
+            source = Source.objects.filter(id=chapter.source_id).first()
+            sources.setdefault(chapter.source_id, source)
+        item = {
+            'id': chapter.id,
+            'title': chapter.title,
+            'link': chapter.link,
+            'updated_at': chapter.updated_at,
+            'source_name': source.name,
+            'source_pinyin': source.pinyin,
+        }
+        res.append(item)
+    return res
+
+
+def jump(request):
+    link = request.GET.get('link')
+    return render_to_response('jump.html', {'link': link})
+
+
+def sbc(request, *args, **kwargs):
+    source = Source.objects.filter(pinyin=kwargs.get('s')).first()
+    if source is None:
+        return page_not_found(request)
+
+    b = Book.objects.filter(pinyin=kwargs.get('b')).first()
+    if b is None:
+        return page_not_found(request)
+
+    chapters = Chapter.objects.filter(source_id=source.id).filter(book_id=b.id).order_by('-id').all()
+    params = {
+        'source': source,
+        'book': b,
+        'chapters': chapters,
+    }
+    return render_to_response('sbc.html', params)
+
+
+def chapter_list(request, *args, **kwargs):
+    b = Book.objects.filter(pinyin=kwargs.get('pinyin')).first()
+    if b is None:
+        return page_not_found(request)
+
+    return render_to_response('chapters.html')
 
 
 def page_not_found(request):

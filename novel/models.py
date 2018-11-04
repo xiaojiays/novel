@@ -1,5 +1,6 @@
 from django.db import models
 from xpinyin import Pinyin
+from mdeditor.fields import MDTextField
 
 
 class Source(models.Model):
@@ -64,6 +65,8 @@ class Book(models.Model):
     sources = models.ManyToManyField(Source)
     finish = models.BooleanField(default=False)
     default = models.BooleanField(default=False)
+    img = models.ImageField(upload_to='images')
+    description = MDTextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

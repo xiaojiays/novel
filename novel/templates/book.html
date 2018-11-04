@@ -1,4 +1,211 @@
 {% extends 'base.html' %}
 {% block content %}
+    <section class="w-all">
+        <nav class="mt20">
+            <ul class="clearfix">
+                <li><a title="网站首页" href="/"><i class="pticon pticon-home pticon-lg"></i> 网站首页</a><i
+                        class="pticon pticon-angle-right icon"></i></li>
+                <li><a title="{{ data.category.name }}小说" href="/category/{{ data.category.pinyin }}.html">{{ data.category.name }}小说</a><i class="pticon pticon-angle-right icon"></i>
+                </li>
+                <li><a title="{{ data.name }}" href="/book/{{ data.pinyin }}.html">{{ data.name }}</a></li>
+            </ul>
+        </nav>
+        <div class="container clearfix mt20">
+            <div class="w-left">
+                <div class="card">
+                    <div class="header line">
+                        <h1>{{ data.name }}</h1>
+                    </div>
+                    <div class="body novel">
+                        <div class="novelinfo">
+                            <div class="novelinfo-r" style="float:left;">
+                                <img title="{{ data.name }}" alt="{{ data.name }}" src="/static/{{ data.img }}">
+                            </div>
+                            <div class="novelinfo-l" style="float:right;">
+                                <p id="author">作者：<i><a title="{{ data.author.name }} 作品大全" href="/author/{{ data.author.pinyin }}.html">{{ data.author.name }}</a></i>&nbsp;&nbsp;类别：<i><a
+                                        title="{{ data.category.name }}小说" href="/category/{{ data.category.pinyin }}.html">{{ data.category.name }}</a></i>&nbsp;&nbsp;状态：<i>{% if data.finish %}完结{% else %}连载中{% endif %}</i></p>
+                                <p id="stats">点击：<i>6335673</i>&nbsp;&nbsp;推荐：<i>2194</i>&nbsp;&nbsp;收藏：<i>4694</i></p>
+                                <p id="update">更新：<i>{{ data.chapter.updated_at | date:'Y-m-d' }}</i>&nbsp;&nbsp;最新：<i>
+                                    <a title="{{ data.chapter.title }}" href="/jump?link={{ data.chapter.link }}" target="_blank">{{ data.chapter.title }}</a></i></p>
+                                <div id="intro"><h3>{{ data.name }} 内容简介：</h3>
+                                    {{ data.desc }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-right">
+                <div class="card pt-tab">
+                    <div class="header tab pt-tab-nav">
+                        <ul class="clearfix">
+                            <li class="active">本月热门</li>
+                            <li>本周热门</li>
+                        </ul>
+                    </div>
+                    <div class="body pt-tab-con">
+                        <ul class="rightlist">
+                            <li><i class="first">1</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="圣墟" href="/1361/">圣墟</a></li>
+                            <li><i class="first">2</i><span><a title="莫默 作品大全" href="/author/%E8%8E%AB%E9%BB%98/">莫默</a></span><a
+                                    title="武炼巅峰" href="/94/">武炼巅峰</a></li>
+                            <li><i class="first">3</i><span><a title="逆苍天 作品大全"
+                                                               href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/">逆苍天</a></span><a
+                                    title="杀神" href="/29/">杀神</a></li>
+                            <li><i>4</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="完美世界" href="/148/">完美世界</a></li>
+                            <li><i>5</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="遮天" href="/12/">遮天</a></li>
+                            <li><i>6</i><span><a title="鱼人二代 作品大全" href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/">鱼人二代</a></span><a
+                                    title="校花的贴身高手" href="/38/">校花的贴身高手</a></li>
+                            <li><i>7</i><span><a title="风凌天下 作品大全" href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/">风凌天下</a></span><a
+                                    title="傲世九重天" href="/26/">傲世九重天</a></li>
 
+                        </ul>
+                        <ul class="rightlist none">
+                            <li><i class="first">1</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="圣墟" href="/1361/">圣墟</a></li>
+                            <li><i class="first">2</i><span><a title="莫默 作品大全" href="/author/%E8%8E%AB%E9%BB%98/">莫默</a></span><a
+                                    title="武炼巅峰" href="/94/">武炼巅峰</a></li>
+                            <li><i class="first">3</i><span><a title="逆苍天 作品大全"
+                                                               href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/">逆苍天</a></span><a
+                                    title="杀神" href="/29/">杀神</a></li>
+                            <li><i>4</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="完美世界" href="/148/">完美世界</a></li>
+                            <li><i>5</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="遮天" href="/12/">遮天</a></li>
+                            <li><i>6</i><span><a title="鱼人二代 作品大全" href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/">鱼人二代</a></span><a
+                                    title="校花的贴身高手" href="/38/">校花的贴身高手</a></li>
+                            <li><i>7</i><span><a title="风凌天下 作品大全" href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/">风凌天下</a></span><a
+                                    title="傲世九重天" href="/26/">傲世九重天</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container clearfix mt20">
+            <div class="w-left">
+                <div class="card">
+                    <div class="header line">
+                        <h2>{{ data.name }} 最新章节列表</h2>
+                    </div>
+                    <div class="body novel">
+                        <ul class="chapterlist">
+                            {% for chapter in chapters %}
+                            <li>
+							    <span class="n">
+								    <a title="{{ data.name }} {{ chapter.source_name }} {{ chapter.title }}" style="" href="/jump?link={{ chapter.link }}" target="_blank">{{ data.name }} {{ chapter.title }}</a>
+								</span>
+                                <span class="t">{{ chapter.updated_at|date:'m-d H:i' }}</span>
+                                <span class="s">
+								    <a title="看看{{ data.name }}在“{{ chapter.source_name }}”上的更新" style="" href="/source/{{ chapter.source_pinyin }}/{{ data.pinyin }}.html">{{ chapter.source_name }}</a>
+							    </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="footer tar">
+                        <a title="{{ data.name }}最新章节列表" href="/{{ data.pinyin }}/chapters.html">更多《{{ data.name }}》最新章节列表</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-right">
+                <div class="card">
+                    <div class="header line">
+                        <h3><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东作品大全</a></h3>
+                    </div>
+                    <div class="body" style="height:125px;overflow-y: scroll;overflow-x: hidden;">
+                        <ul class="rightlist">
+                            <li><i class="first">1</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="圣墟" href="/1361/">圣墟</a></li>
+                            <li><i class="first">2</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="神墓" href="/1419/">神墓</a></li>
+                            <li><i class="first">3</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="长生界" href="/641/">长生界</a></li>
+                            <li><i>4</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="遮天" href="/12/">遮天</a></li>
+                            <li><i>5</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="完美世界" href="/148/">完美世界</a></li>
+                            <li><i>6</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
+                                    title="不死不灭" href="/224/">不死不灭</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt20">
+                    <div class="header line">
+                        <h3>圣墟 站点列表</h3>
+                    </div>
+                    <div class="body" style="height:154px;overflow-y: scroll;overflow-x: hidden;">
+                        <ul class="rightlist">
+                            <li><i class="first">1</i><a title="圣墟 起点中文" href="/1361/list_qidian/">起点中文</a></li>
+                            <li><i class="first">2</i><a title="圣墟 飘天文学" href="/1361/list_piaotian/">飘天文学</a></li>
+                            <li><i class="first">3</i><a title="圣墟 再读读" href="/1361/list_zaidudu/">再读读</a></li>
+                            <li><i>4</i><a title="圣墟 少年文学" href="/1361/list_snwx/">少年文学</a></li>
+                            <li><i>5</i><a title="圣墟 2k小说" href="/1361/list_2kxs/">2k小说</a></li>
+                            <li><i>6</i><a title="圣墟 大家读" href="/1361/list_dajiadu/">大家读</a></li>
+                            <li><i>7</i><a title="圣墟 番茄小说网" href="/1361/list_fqxsw/">番茄小说网</a></li>
+                            <li><i>8</i><a title="圣墟 大海中文" href="/1361/list_dhzw/">大海中文</a></li>
+                            <li><i>9</i><a title="圣墟 E小说" href="/1361/list_exiaoshuo/">E小说</a></li>
+                            <li><i>10</i><a title="圣墟 三七中文" href="/1361/list_37zw/">三七中文</a></li>
+                            <li><i>11</i><a title="圣墟 999文学" href="/1361/list_999wx/">999文学</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mt20 " style="height: ;">
+                    <div class="header line">
+                        <h3>最新动态</h3>
+                    </div>
+                    <div class="body" style="height:347px;overflow: hidden">
+                        <ul class="rightlist">
+                            <li>
+                                <a title="辰东小说主角分析，《圣墟》和前面的主角布局太大，辣眼睛啊" href="/article/624.html" target="_blank">辰东小说主角分析，《圣墟》和前面的主角布局太大，辣眼睛啊</a>
+                            </li>
+                            <li>
+                                <a title="圣墟其他角色" href="/article/623.html" target="_blank">圣墟其他角色</a>
+                            </li>
+                            <li>
+                                <a title="圣墟作品评价" href="/article/622.html" target="_blank">圣墟作品评价</a>
+                            </li>
+                            <li>
+                                <a title="圣墟珍稀宝树" href="/article/621.html" target="_blank">圣墟珍稀宝树</a>
+                            </li>
+                            <li>
+                                <a title="圣墟奇兵异宝" href="/article/620.html" target="_blank">圣墟奇兵异宝</a>
+                            </li>
+                            <li>
+                                <a title="圣墟功法" href="/article/619.html" target="_blank">圣墟功法</a>
+                            </li>
+                            <li>
+                                <a title="圣墟势力" href="/article/618.html" target="_blank">圣墟势力</a>
+                            </li>
+                            <li>
+                                <a title="圣墟主角敌人" href="/article/617.html" target="_blank">圣墟主角敌人</a>
+                            </li>
+                            <li>
+                                <a title="圣墟主角" href="/article/616.html" target="_blank">圣墟主角</a>
+                            </li>
+                            <li>
+                                <a title="圣墟境界划分" href="/article/615.html" target="_blank">圣墟境界划分</a>
+                            </li>
+                            <li style="margin-top: 13px;">
+                                <a title="最新文章列表" href="/weixin/list/1.html">更多最新文章...</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="seofooter">
+            <p>
+                《{{ data.name }}》是由<a title="{{ data.author.name }}" href="/author/{{ data.author.pinyin }}.html">{{ data.author.name }}</a>倾情撰写的小说！《{{ data.name }}》为热心网友免费发布在<a title="{{ settings.SITE_NAME }}小说网"
+                                                                                                      href="/">{{ settings.SITE_NAME }}小说网</a>供大家免费阅读。
+            </p>
+            <p>欢迎进入《{{ data.name }}》全文阅读。谢谢您一直对<a title="{{ settings.SITE_NAME }}小说网" href="/">{{ settings.SITE_NAME }}小说网</a>
+                <a title="{{ data.category.name }}小说" href="/category/{{ data.category.pinyin }}.html">{{ data.category.name }}小说</a>的关注和支持！
+            </p>
+        </div>
+    </section>
 {% endblock %}
