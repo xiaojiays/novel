@@ -1,7 +1,7 @@
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response
 from django.core.paginator import Paginator
 
-from novel.models import Book, Chapter, Source
+from novel.models import Book, Chapter, Source, Author
 from novel.util import Util
 from novel import settings
 
@@ -10,13 +10,14 @@ import math
 
 def home(request, *args, **kwargs):
     size = 50
-    book_list = Book.objects.all()
+    book_list = Book.objects.filter(status=0).all()
     paginator = Paginator(book_list, size)
     page = Util.get_page(kwargs)
     books = paginator.page(page)
     total = book_list.count()
     total_page = math.ceil(total / size)
     pages = get_pages(page, total_page)
+    book = get_default_book()
 
     data = []
     for b in books:
@@ -32,6 +33,7 @@ def home(request, *args, **kwargs):
         'data': data,
         'pages': pages,
         'page': page,
+        'book': book,
 
     }
     return render_to_response('home.html', params)
@@ -60,7 +62,7 @@ def get_data(b):
 
 def get_pages(page, total_page):
     start_page = get_start_page(page, total_page)
-    end_page = start_page + 8
+    end_page = start_page + 6
     if end_page > total_page:
         end_page = total_page
 
@@ -72,13 +74,17 @@ def get_pages(page, total_page):
 
 
 def get_start_page(page, total_page):
-    if total_page <= 9:
+    if total_page <= 7:
         return 1
-    if page <= 5:
+    if page <= 4:
         return 1
-    if total_page - page >= 4:
-        return page - 4
-    return page - (8 - (total_page - page))
+    if total_page - page >= 3:
+        return page - 3
+    return page - (6 - (total_page - page))
+
+
+def get_default_book():
+    return Book.objects.filter(default=1).filter(status=0).order_by('-id').first()
 
 
 def book(request, *args, **kwargs):
@@ -86,16 +92,17 @@ def book(request, *args, **kwargs):
     if pinyin is None:
         return page_not_found(request)
 
-    b = Book.objects.filter(pinyin=str(pinyin)).first()
+    b = Book.objects.filter(pinyin=str(pinyin)).filter(status=0).first()
     if b is None:
         return page_not_found(request)
 
     data = get_data(b)
     chapters = get_chapters(b)
     params = {
-        'data': data,
+        'book': data,
         'settings': settings,
         'chapters': chapters,
+        'book_page': True,
     }
 
     return render_to_response('book.html', params)
@@ -135,15 +142,16 @@ def sbc(request, *args, **kwargs):
     if source is None:
         return page_not_found(request)
 
-    b = Book.objects.filter(pinyin=kwargs.get('b')).first()
+    b = Book.objects.filter(pinyin=kwargs.get('b')).filter(status=0).first()
     if b is None:
         return page_not_found(request)
 
-    chapters = Chapter.objects.filter(source_id=source.id).filter(book_id=b.id).order_by('-id').all()
+    chapters = Chapter.objects.filter(source_id=source.id).filter(book_id=b.id).order_by('-number').all()
     params = {
         'source': source,
         'book': b,
         'chapters': chapters,
+        'book_page': True,
     }
     return render_to_response('sbc.html', params)
 
@@ -153,7 +161,145 @@ def chapter_list(request, *args, **kwargs):
     if b is None:
         return page_not_found(request)
 
-    return render_to_response('chapters.html')
+    category = b.categories.first()
+
+    size = 50
+    chapters = Chapter.objects.filter(book_id=b.id).order_by('-number').all()
+    total = chapters.count()
+    paginator = Paginator(chapters, size)
+    page = Util.get_page(kwargs)
+    chapters = paginator.page(page)
+    total_page = math.ceil(total / size)
+    pages = get_pages(page, total_page)
+
+    params = {
+        'book': b,
+        'category': category,
+        'chapters': format_chapters(chapters),
+        'page': page,
+        'pages': pages,
+        'total_page': total_page,
+        'total': total,
+        'book_page': True,
+    }
+
+    return render_to_response('chapters.html', params)
+
+
+def format_chapters(chapters):
+    if len(chapters) == 0:
+        return chapters
+
+    source_ids = []
+    for chapter in chapters:
+        source_ids.append(chapter.source_id)
+    sources = Source.objects.filter(id__in=source_ids).all()
+    if len(sources) == 0:
+        return chapters
+
+    source_map = {}
+    for source in sources:
+        source_map.setdefault(source.id, source)
+
+    res = []
+    for chapter in chapters:
+        item = {
+            'title': chapter.title,
+            'id': chapter.id,
+            'link': chapter.link,
+            'updated_at': chapter.updated_at
+        }
+        source = source_map.get(chapter.source_id)
+        if source is not None:
+            item.setdefault('source_name', source.name)
+            item.setdefault('source_pinyin', source.pinyin)
+        res.append(item)
+    return res
+
+
+def newest(request, *args, **kwargs):
+    page = Util.get_page(kwargs)
+    books = Book.objects.filter(status=0).all()
+    params = show_list(books, page)
+    params.setdefault('newest_page', True)
+    return render_to_response('newest.html', params)
+
+
+def finish(request, *args, **kwargs):
+    page = Util.get_page(kwargs)
+    books = Book.objects.filter(status=0).filter(finish=1).all()
+    params = show_list(books, page)
+    params.setdefault('finish_page', True)
+    return render_to_response('finish.html', params)
+
+
+def show_list(books, page):
+    size = 50
+    total = books.count()
+    paginator = Paginator(books, size)
+    books = paginator.page(page)
+    total_page = math.ceil(total / size)
+    pages = get_pages(page, total_page)
+    b = get_default_book()
+
+    params = {
+        'page': page,
+        'total': total,
+        'total_page': total_page,
+        'books': format_books(books),
+        'pages': pages,
+        'book': b,
+    }
+    return params
+
+
+def format_books(books):
+    if len(books) == 0:
+        return books
+
+    res = []
+    for b in books:
+        res.append(get_data(b))
+    return res
+
+
+def get_chapter(b):
+    return Chapter.objects.filter(book_id=b.id).order_by('-id').first()
+
+
+def search(request):
+    search_type = request.GET.get('type')
+    keyword = request.GET.get('key')
+    if search_type is None or len(search_type) == 0 \
+            or keyword is None or len(keyword) == 0:
+        return home(request)
+
+    data = []
+    if search_type == 'book':
+        books = Book.objects.filter(status=0).filter(name__icontains=keyword).all()
+        if len(books) > 0:
+            for b in books:
+                data.append(get_data(b))
+    elif search_type == 'author':
+        authors = Author.objects.filter(status=0).filter(name__icontains=keyword).all()
+        if len(authors) > 0:
+            author_ids = []
+            for author in authors:
+                author_ids.append(str(author.id))
+            books = Book.objects.raw('select * from novel_book_authors a left join novel_book b on a.book_id=b.id where a.author_id in("' + '"'.join(author_ids) + '")')
+            if len(books) > 0:
+                for b in books:
+                    data.append(get_data(b))
+    else:
+        return home(request)
+
+    params = {
+        'type': search_type,
+        'keyword': keyword,
+        'book': get_default_book(),
+        'books': data,
+    }
+    return render_to_response('search.html', params)
 
 
 def page_not_found(request):

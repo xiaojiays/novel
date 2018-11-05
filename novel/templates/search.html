@@ -1,73 +1,55 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <section class="w-all">
+<section class="w-all">
     <nav class="mt20">
         <ul class="clearfix">
-            <li><a href="/" title="{{ settings.SITE_NAME }}小说网首页"><i class="pticon pticon-home pticon-lg"></i> {{ settings.SITE_NAME }}小说网首页</a><i class="pticon pticon-angle-right icon"></i></li>
-            <li><a href="/" title="精品小说">精品小说</a></li>
+            <li><a href="/" title="{{settings.SITE_NAME}}小说网首页"><i class="pticon pticon-home pticon-lg"></i> {{settings.SITE_NAME}}小说网首页</a><i class="pticon pticon-angle-right icon"></i></li>
+            <li><a href="/search?type={{type}}&amp;key={{keyword}}" title="搜索 “{{keyword}}” 结果">搜索 “{{keyword}}” 结果</a></li>
         </ul>
     </nav>
     <div class="container clearfix mt20">
         <div class="w-left">
             <div class="card">
                 <div class="header line">
-                    <h2>精品说列表</h2>
+                    <h2>搜索 “<strong class="num">{{keyword}}</strong>” 结果</h2>
                 </div>
                 <div class="body">
-                    <ul class="updatelist">
-                        {% for book in data %}
-                        <li class="headerhui">
-                            <span class="n">[<a href="/category/{{ book.category.pinyin }}.html" title="{{ book.category.name }}小说">{{ book.category.name }}</a>]&nbsp;&nbsp;<a href="/book/{{ book.pinyin }}.html" title="{{ book.name }}" target="_blank"><strong>{{ book.name }}</strong></a></span>
-                            <span class="c"><a href="/chapter/{{ book.chapter.id }}.html" title="{{ book.chapter.title }}" target="_blank">{{ book.chapter.title }}</a></span>
-                            <span class="a"><a href="/author/{{ book.author.pinyin }}.html" title="{{ book.author.name }}" target="_blank">{{ book.author.name }}</a></span>
-                            <span class="t">{{ book.chapter.updated_at | date:"m-d H:i:s" }}</span>
+                    <ul class="librarylist">
+                        {% for book in books %}
+                        <li>
+                            <div class="pt-ll-l">
+                                <a href="/book/{{book.pinyin}}.html" title="{{book.name}}"><img src="/static/{{book.img}}" alt="{{book.name}}"></a>
+                            </div>
+                            <div class="pt-ll-r">
+                                <p class="info">
+                                    <span>《<a href="/book/{{book.pinyin}}.html" class="novelname" title="{{book.name}}">{{book.name}}</a>》</span>
+                                    <span>作者：<a href="/author/{{book.author.pinyin}}.html" title="{{book.author.name}} 作品列表">{{book.author.name}}</a></span>
+                                    <span>分类：<a href="/category/{{book.category.pinyin}}.html" title="{{book.category.name}}小说">{{book.category.name}}</a></span>
+                                </p>
+                                <p class="intro">
+                                    {{book.desc}}
+                                </p>
+                                <p class="last">
+                                    最新章节：<a href="/jump?link={{book.chapter.link}}" title="{{book.name}} {{book.chapter.title}}" target="_blank">{{book.chapter.title}}</a>({{book.chapter.updated_at|date:'m-d H:i'}})
+                                </p>
+                            </div>
                             <div class="clear"></div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="footer pagination" style="font-size: 13px;">
-                    <span>共{{ total_page }}页 {{ total }}条</span>
-                    <a href="/" class="first number">&lt;&lt;</a>
-                    <a href="{% ifequal page 1 %}/{% else %}list-{{page|add:-1}}.html{% endifequal %}" class="prev number">&lt;</a>
-                    {% for p in pages %}
-                        {% ifequal p page %}
-                        <a class="current" href="javascript:;">{{p}}</a>
-                        {% else %}
-                        <a href="/list-{{p}}.html" class="number">{{p}}</a>
-                        {% endifequal %}
-                    {% endfor %}
-                    <a href="/{% ifequal page total_page %}list-{{total_page}}.html{% else %}list-{{page|add:1}}.html{% endifequal %}"
-       class="next number">&gt;</a>
-                    <a href="/list-{{ total_page }}.html" class="last number">&gt;&gt;</a>
-                </div>
             </div>
         </div>
         <div class="w-right">
-            <div class="card">
-                <div class="header line">
-                    <h3>小说排行</h3>
+
+            <div class="card pt-tab">
+                <div class="header tab pt-tab-nav">
+                    <ul class="clearfix">
+                        <li class="active">本月热门</li>
+                        <li>本周热门</li>
+                    </ul>
                 </div>
-                <div class="body">
-                    <ul class="toplist clearfix">
-                                                                        <li><a href="/top/postdate.html" title="入库时间">入库时间</a></li>
-                                                <li><a href="/top/lastupdate.html" title="最新更新">最新更新</a></li>
-                                                <li><a href="/top/dayvisit.html" title="日点击">日点击</a></li>
-                                                <li><a href="/top/weekvisit.html" title="周点击">周点击</a></li>
-                                                <li><a href="/top/monthvisit.html" title="月点击">月点击</a></li>
-                                                <li><a href="/top/allvisit.html" title="总点击">总点击</a></li>
-                                                <li><a href="/top/marknum.html" title="收藏数">收藏数</a></li>
-                                                <li><a href="/top/votenum.html" title="推荐数">推荐数</a></li>
-                                                <li><a href="/top/downnum.html" title="下载数">下载数</a></li>
-                                            </ul>
-                </div>
-            </div>
-            <div class="card mt20">
-                <div class="header">
-                    <h3>本月热门</h3>
-                </div>
-                <div class="body">
+                <div class="body pt-tab-con">
                     <ul class="rightlist">
                                                                         <li><i class="first">1</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/1361/" title="圣墟">圣墟</a></li>
                                                 <li><i class="first">2</i><span><a href="/author/%E8%8E%AB%E9%BB%98/" title="莫默 作品大全">莫默</a></span><a href="/94/" title="武炼巅峰">武炼巅峰</a></li>
@@ -85,14 +67,7 @@
                                                 <li><i>14</i><span><a href="/author/%E5%AD%A4%E5%8D%95%E5%9C%B0%E9%A3%9E/" title="孤单地飞 作品大全">孤单地飞</a></span><a href="/466/" title="神道丹尊">神道丹尊</a></li>
                                                 <li><i>15</i><span><a href="/author/%E7%A6%B9%E6%9E%AB/" title="禹枫 作品大全">禹枫</a></span><a href="/210/" title="武神天下">武神天下</a></li>
                                             </ul>
-                </div>
-            </div>
-            <div class="card mt20">
-                <div class="header">
-                    <h3>本周热门</h3>
-                </div>
-                <div class="body">
-                    <ul class="rightlist">
+                    <ul class="rightlist none">
                                                                         <li><i class="first">1</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a href="/1361/" title="圣墟">圣墟</a></li>
                                                 <li><i class="first">2</i><span><a href="/author/%E8%8E%AB%E9%BB%98/" title="莫默 作品大全">莫默</a></span><a href="/94/" title="武炼巅峰">武炼巅峰</a></li>
                                                 <li><i class="first">3</i><span><a href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/" title="逆苍天 作品大全">逆苍天</a></span><a href="/29/" title="杀神">杀神</a></li>
@@ -108,30 +83,6 @@
                                                 <li><i>13</i><span><a href="/author/%E9%BB%84%E9%87%91%E6%88%98%E5%A3%AB/" title="黄金战士 作品大全">黄金战士</a></span><a href="/42/" title="重生之妖孽人生">重生之妖孽人生</a></li>
                                                 <li><i>14</i><span><a href="/author/%E5%AD%A4%E5%8D%95%E5%9C%B0%E9%A3%9E/" title="孤单地飞 作品大全">孤单地飞</a></span><a href="/466/" title="神道丹尊">神道丹尊</a></li>
                                                 <li><i>15</i><span><a href="/author/%E7%A6%B9%E6%9E%AB/" title="禹枫 作品大全">禹枫</a></span><a href="/210/" title="武神天下">武神天下</a></li>
-                                            </ul>
-                </div>
-            </div>
-            <div class="card mt20">
-                <div class="header line">
-                    <h3>最新入库</h3>
-                </div>
-                <div class="body">
-                    <ul class="rightlist">
-                                                                        <li><i class="first">1</i><span>11-01</span><a href="/29561/" title="重生之幸福日常">重生之幸福日常</a></li>
-                                                <li><i class="first">2</i><span>11-01</span><a href="/29560/" title="二姑娘">二姑娘</a></li>
-                                                <li><i class="first">3</i><span>11-01</span><a href="/29559/" title="都市至尊龙皇">都市至尊龙皇</a></li>
-                                                <li><i>4</i><span>11-01</span><a href="/29558/" title="毒妃太猛，王爷难招架">毒妃太猛，王爷难招架</a></li>
-                                                <li><i>5</i><span>11-01</span><a href="/29557/" title="跨过千年来爱你">跨过千年来爱你</a></li>
-                                                <li><i>6</i><span>11-01</span><a href="/29556/" title="双视人生">双视人生</a></li>
-                                                <li><i>7</i><span>11-01</span><a href="/29555/" title="无限之疯狂游乐园">无限之疯狂游乐园</a></li>
-                                                <li><i>8</i><span>11-01</span><a href="/29554/" title="最强农家媳">最强农家媳</a></li>
-                                                <li><i>9</i><span>11-01</span><a href="/29553/" title="穿越之农门恶妇">穿越之农门恶妇</a></li>
-                                                <li><i>10</i><span>11-01</span><a href="/29552/" title="穿书之女配翻身记">穿书之女配翻身记</a></li>
-                                                <li><i>11</i><span>11-01</span><a href="/29550/" title="穿越婚然天成">穿越婚然天成</a></li>
-                                                <li><i>12</i><span>11-01</span><a href="/29551/" title="农门妇">农门妇</a></li>
-                                                <li><i>13</i><span>11-01</span><a href="/29549/" title="我的作家先生">我的作家先生</a></li>
-                                                <li><i>14</i><span>11-01</span><a href="/29548/" title="妾色">妾色</a></li>
-                                                <li><i>15</i><span>11-01</span><a href="/29546/" title="宠婚撩人">宠婚撩人</a></li>
                                             </ul>
                 </div>
             </div>

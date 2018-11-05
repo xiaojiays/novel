@@ -97,10 +97,10 @@ a{width:100%;display:block;white-space:nowrap;text-overflow:ellipsis;overflow:hi
 5px 10px;color:#888}.chapterlist
 a{color:#555}.chapterlist a:hover{color:#1abc9c}.chapterlist
 li{height:35px;line-height:35px;border-bottom:1px #eee dashed;overflow:hidden}.chapterlist li
-.n{float:left;width:480px}.chapterlist li .n
+.n{float:left;width:420px}.chapterlist li .n
 i{margin-left:5px;font-size:12px}.chapterlist li
 .s{width:100px;text-align:right;float:right}.chapterlist li
-.t{width:85px;text-align:right;float:right}.pagination{text-align:right;padding:10px
+.t{width:145px;text-align:right;float:right}.pagination{text-align:right;padding:10px
 10px 10px 0 !important;font-size:16px}.pagination a, .pagination
 span{margin:0
 5px 0 0;padding:3px

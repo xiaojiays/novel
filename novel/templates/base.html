@@ -25,16 +25,16 @@
 
         <div class="logosearch w-all ">
             <div class="logo fl"><a href="/" title="{{ settings.SITE_NAME }}小说网"><img src="/template/defaultv1/public/image/logo.png" alt="{{ settings.SITE_NAME }}小说网"></a></div>
-            <form class="searchbox fl" action="/search.html">
+            <form class="searchbox fl" action="/search">
                 <div class="dropmenu">
                     <span class="tri"></span>
                     <ul class="dropmenu-item">
-                        <li data-type="novelname">书名</li>
+                        <li data-type="book">书名</li>
                         <li data-type="author">作者</li>
                     </ul>
                 </div>
-                <input name="searchtype" type="hidden" value="novelname">
-                <label class="fl"><input type="text" name="searchkey" id="" class="text"></label>
+                <input id="type" name="type" type="hidden" value="book">
+                <label class="fl"><input type="text" name="key" id="key" class="text"></label>
                 <input type="submit" value="搜索" class="searchbtn">
             </form>
             <div class="operate fl">
@@ -47,14 +47,14 @@
         <nav class="w-all">
             <ul class="clearfix">
                 <li {% if home_page %} class="active" {% endif %}><a href="/" title="{{ settings.SITE_NAME }}}小说网首页">首页</a></li>
-                <li><a href="/1361/" title="三寸人间">三寸人间</a></li>
-                <li><a href="/category.html" title="小说分类">小说分类</a></li>
-                <li><a href="/rank.html" title="点击排行">点击排行</a></li>
-                <li><a href="/newest.html" title="最近更新">最近更新</a></li>
-                <li><a href="/finish.html" title="全本小说">全本小说</a></li>
-                <li><a href="/trends.html" title="小说动态">小说动态</a></li>
-                <li><a href="/subject.html" title="专题">专题</a></li>
-                <li><a href="/contact.html" title="联系我们">联系我们</a></li>
+                <li {% if book_page %} class="active" {% endif %}><a href="/book/{{book.pinyin}}.html" title="{{book.name}}">{{book.name}}</a></li>
+                <li {% if category_page %} class="active" {% endif %}><a href="/category.html" title="小说分类">小说分类</a></li>
+                <li {% if click_page %} class="active" {% endif %}><a href="/rank.html" title="点击排行">点击排行</a></li>
+                <li {% if newest_page %} class="active" {% endif %}><a href="/newest.html" title="最近更新">最近更新</a></li>
+                <li {% if finish_page %} class="active" {% endif %}><a href="/finish.html" title="全本小说">全本小说</a></li>
+                <li {% if trends_page %} class="active" {% endif %}><a href="/trends.html" title="小说动态">小说动态</a></li>
+                <li {% if subject_page %} class="active" {% endif %}><a href="/subject.html" title="专题">专题</a></li>
+                <li {% if contact_page %} class="active" {% endif %}><a href="/contact.html" title="联系我们">联系我们</a></li>
             </ul>
         </nav>
     </header>
@@ -68,4 +68,17 @@
         </div>
     </footer>
 </body>
+<script type="text/javascript" src="/static/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+       $(".dropmenu-item").find("li").live("click",  function () {
+           if ($("#type").val() != $(this).attr('data-type')) {
+               $("#type").val($(this).attr('data-type'));
+               var obj = $(this);
+               $(this).remove();
+               $(".dropmenu-item").find("li").before(obj);
+           }
+       });
+    });
+</script>
 </html>

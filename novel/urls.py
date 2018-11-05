@@ -21,11 +21,13 @@ urlpatterns = [
     path('ad/min/', admin.site.urls),
     path('', views.home),
     path('jump', views.jump),
+    path('search', views.search),
     re_path(r'^source/(?P<s>\w+)/(?P<b>\w+)\.html', views.sbc),
     re_path(r'^list(-(?P<type>[a-zA-Z]+))?(-(?P<page>\d+))?\.html$', views.home),
     re_path(r'^book/(?P<pinyin>\w+)\.html', views.book),
-    re_path(r'(?P<pinyin>\w+)/chapters\.html', views.chapter_list),
-
+    re_path(r'(?P<pinyin>\w+)/chapters(-(?P<page>\d+))?\.html', views.chapter_list),
+    re_path('newest(-(?P<page>\d+))?.html', views.newest),
+    re_path('finish(-(?P<page>\d+))?.html', views.finish),
 ]
 
 handler404 = views.page_not_found

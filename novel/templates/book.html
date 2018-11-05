@@ -5,30 +5,30 @@
             <ul class="clearfix">
                 <li><a title="网站首页" href="/"><i class="pticon pticon-home pticon-lg"></i> 网站首页</a><i
                         class="pticon pticon-angle-right icon"></i></li>
-                <li><a title="{{ data.category.name }}小说" href="/category/{{ data.category.pinyin }}.html">{{ data.category.name }}小说</a><i class="pticon pticon-angle-right icon"></i>
+                <li><a title="{{ book.category.name }}小说" href="/category/{{ book.category.pinyin }}.html">{{ book.category.name }}小说</a><i class="pticon pticon-angle-right icon"></i>
                 </li>
-                <li><a title="{{ data.name }}" href="/book/{{ data.pinyin }}.html">{{ data.name }}</a></li>
+                <li><a title="{{ book.name }}" href="/book/{{ book.pinyin }}.html">{{ book.name }}</a></li>
             </ul>
         </nav>
         <div class="container clearfix mt20">
             <div class="w-left">
                 <div class="card">
                     <div class="header line">
-                        <h1>{{ data.name }}</h1>
+                        <h1>{{ book.name }}</h1>
                     </div>
                     <div class="body novel">
                         <div class="novelinfo">
                             <div class="novelinfo-r" style="float:left;">
-                                <img title="{{ data.name }}" alt="{{ data.name }}" src="/static/{{ data.img }}">
+                                <img title="{{ book.name }}" alt="{{ book.name }}" src="/static/{{ book.img }}">
                             </div>
                             <div class="novelinfo-l" style="float:right;">
-                                <p id="author">作者：<i><a title="{{ data.author.name }} 作品大全" href="/author/{{ data.author.pinyin }}.html">{{ data.author.name }}</a></i>&nbsp;&nbsp;类别：<i><a
-                                        title="{{ data.category.name }}小说" href="/category/{{ data.category.pinyin }}.html">{{ data.category.name }}</a></i>&nbsp;&nbsp;状态：<i>{% if data.finish %}完结{% else %}连载中{% endif %}</i></p>
+                                <p id="author">作者：<i><a title="{{ book.author.name }} 作品大全" href="/author/{{ book.author.pinyin }}.html">{{ book.author.name }}</a></i>&nbsp;&nbsp;类别：<i><a
+                                        title="{{ book.category.name }}小说" href="/category/{{ book.category.pinyin }}.html">{{ book.category.name }}</a></i>&nbsp;&nbsp;状态：<i>{% if book.finish %}完结{% else %}连载中{% endif %}</i></p>
                                 <p id="stats">点击：<i>6335673</i>&nbsp;&nbsp;推荐：<i>2194</i>&nbsp;&nbsp;收藏：<i>4694</i></p>
-                                <p id="update">更新：<i>{{ data.chapter.updated_at | date:'Y-m-d' }}</i>&nbsp;&nbsp;最新：<i>
-                                    <a title="{{ data.chapter.title }}" href="/jump?link={{ data.chapter.link }}" target="_blank">{{ data.chapter.title }}</a></i></p>
-                                <div id="intro"><h3>{{ data.name }} 内容简介：</h3>
-                                    {{ data.desc }}
+                                <p id="update">更新：<i>{{ book.chapter.updated_at | date:'Y-m-d' }}</i>&nbsp;&nbsp;最新：<i>
+                                    <a title="{{ book.chapter.title }}" href="/jump?link={{ book.chapter.link }}" target="_blank">{{ book.chapter.title }}</a></i></p>
+                                <div id="intro"><h3>{{ book.name }} 内容简介：</h3>
+                                    {{ book.desc }}
                                 </div>
                             </div>
                         </div>
@@ -88,25 +88,25 @@
             <div class="w-left">
                 <div class="card">
                     <div class="header line">
-                        <h2>{{ data.name }} 最新章节列表</h2>
+                        <h2>{{ book.name }} 最新章节列表</h2>
                     </div>
                     <div class="body novel">
                         <ul class="chapterlist">
                             {% for chapter in chapters %}
                             <li>
 							    <span class="n">
-								    <a title="{{ data.name }} {{ chapter.source_name }} {{ chapter.title }}" style="" href="/jump?link={{ chapter.link }}" target="_blank">{{ data.name }} {{ chapter.title }}</a>
+								    <a title="{{ book.name }} {{ chapter.source_name }} {{ chapter.title }}" style="" href="/jump?link={{ chapter.link }}" target="_blank">{{ book.name }} {{ chapter.title }}</a>
 								</span>
-                                <span class="t">{{ chapter.updated_at|date:'m-d H:i' }}</span>
+                                <span class="t">{{ chapter.updated_at|date:'Y-m-d H:i:s' }}</span>
                                 <span class="s">
-								    <a title="看看{{ data.name }}在“{{ chapter.source_name }}”上的更新" style="" href="/source/{{ chapter.source_pinyin }}/{{ data.pinyin }}.html">{{ chapter.source_name }}</a>
+								    <a title="看看{{ book.name }}在“{{ chapter.source_name }}”上的更新" style="" href="/source/{{ chapter.source_pinyin }}/{{ book.pinyin }}.html">{{ chapter.source_name }}</a>
 							    </span>
                             </li>
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="footer tar">
-                        <a title="{{ data.name }}最新章节列表" href="/{{ data.pinyin }}/chapters.html">更多《{{ data.name }}》最新章节列表</a>
+                        <a title="{{ book.name }}最新章节列表" href="/{{ book.pinyin }}/chapters.html">更多《{{ book.name }}》最新章节列表</a>
                     </div>
                 </div>
             </div>
@@ -200,11 +200,11 @@
         <br>
         <div class="seofooter">
             <p>
-                《{{ data.name }}》是由<a title="{{ data.author.name }}" href="/author/{{ data.author.pinyin }}.html">{{ data.author.name }}</a>倾情撰写的小说！《{{ data.name }}》为热心网友免费发布在<a title="{{ settings.SITE_NAME }}小说网"
+                《{{ book.name }}》是由<a title="{{ book.author.name }}" href="/author/{{ book.author.pinyin }}.html">{{ book.author.name }}</a>倾情撰写的小说！《{{ book.name }}》为热心网友免费发布在<a title="{{ settings.SITE_NAME }}小说网"
                                                                                                       href="/">{{ settings.SITE_NAME }}小说网</a>供大家免费阅读。
             </p>
-            <p>欢迎进入《{{ data.name }}》全文阅读。谢谢您一直对<a title="{{ settings.SITE_NAME }}小说网" href="/">{{ settings.SITE_NAME }}小说网</a>
-                <a title="{{ data.category.name }}小说" href="/category/{{ data.category.pinyin }}.html">{{ data.category.name }}小说</a>的关注和支持！
+            <p>欢迎进入《{{ book.name }}》全文阅读。谢谢您一直对<a title="{{ settings.SITE_NAME }}小说网" href="/">{{ settings.SITE_NAME }}小说网</a>
+                <a title="{{ book.category.name }}小说" href="/category/{{ book.category.pinyin }}.html">{{ book.category.name }}小说</a>的关注和支持！
             </p>
         </div>
     </section>

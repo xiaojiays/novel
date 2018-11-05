@@ -1,6 +1,5 @@
 from django.db import models
 from xpinyin import Pinyin
-from mdeditor.fields import MDTextField
 
 
 class Source(models.Model):
@@ -65,10 +64,10 @@ class Book(models.Model):
     sources = models.ManyToManyField(Source)
     finish = models.BooleanField(default=False)
     default = models.BooleanField(default=False)
-    img = models.ImageField(upload_to='images')
-    description = MDTextField()
+    img = models.ImageField(upload_to='images', default='')
+    description = models.CharField(max_length=200, default='')
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -99,7 +98,7 @@ class Chapter(models.Model):
     link = models.CharField(max_length=500, default='')
     content_id = models.IntegerField(default=0)
     number = models.IntegerField(default=0)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
