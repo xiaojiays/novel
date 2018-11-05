@@ -24,6 +24,8 @@ urlpatterns = [
     path('search', views.search),
     re_path(r'^source/(?P<s>\w+)/(?P<b>\w+)\.html', views.sbc),
     re_path(r'^list(-(?P<type>[a-zA-Z]+))?(-(?P<page>\d+))?\.html$', views.home),
+    re_path(r'^category(-(?P<page>\d+))?\.html$', views.category_list),
+    re_path(r'^category/(?P<pinyin>\w+)(-(?P<page>\d+))?\.html$', views.category_list),
     re_path(r'^book/(?P<pinyin>\w+)\.html', views.book),
     re_path(r'(?P<pinyin>\w+)/chapters(-(?P<page>\d+))?\.html', views.chapter_list),
     re_path('newest(-(?P<page>\d+))?.html', views.newest),

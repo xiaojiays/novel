@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator
 
-from novel.models import Book, Chapter, Source, Author
+from novel.models import Book, Chapter, Source, Author, Category
 from novel.util import Util
 from novel import settings
 
@@ -152,6 +152,7 @@ def sbc(request, *args, **kwargs):
         'book': b,
         'chapters': chapters,
         'book_page': True,
+        'settings': settings,
     }
     return render_to_response('sbc.html', params)
 
@@ -181,6 +182,7 @@ def chapter_list(request, *args, **kwargs):
         'total_page': total_page,
         'total': total,
         'book_page': True,
+        'settings': settings,
     }
 
     return render_to_response('chapters.html', params)
@@ -249,6 +251,7 @@ def show_list(books, page):
         'books': format_books(books),
         'pages': pages,
         'book': b,
+        'settings': settings,
     }
     return params
 
@@ -286,7 +289,8 @@ def search(request):
             author_ids = []
             for author in authors:
                 author_ids.append(str(author.id))
-            books = Book.objects.raw('select * from novel_book_authors a left join novel_book b on a.book_id=b.id where a.author_id in("' + '"'.join(author_ids) + '")')
+            books = Book.objects.raw('select * from novel_book_authors a left join novel_book b '
+                                     'on a.book_id=b.id where a.author_id in("' + '"'.join(author_ids) + '")')
             if len(books) > 0:
                 for b in books:
                     data.append(get_data(b))
@@ -298,8 +302,50 @@ def search(request):
         'keyword': keyword,
         'book': get_default_book(),
         'books': data,
+        'settings': settings,
     }
     return render_to_response('search.html', params)
+
+
+def category_list(request, *args, **kwargs):
+    categories = Category.objects.all()
+    size = 50
+    page = Util.get_page(kwargs)
+    pinyin = kwargs.get('pinyin')
+    category = None
+    if pinyin is not None and len(pinyin) > 0:
+        category = Category.objects.filter(pinyin=pinyin).first()
+    if category is not None:
+        books = Book.objects.filter(categories=category).filter(status=0).order_by('-id').all()
+    else:
+        books = Book.objects.filter(status=0).order_by('-id').all()
+    total = books.count()
+    paginator = Paginator(books, size)
+    books = paginator.page(page)
+    total_page = math.ceil(total / size)
+    pages = get_pages(page, total_page)
+    b = get_default_book()
+    params = {
+        'settings': settings,
+        'book': get_default_book(),
+        'category_page': True,
+        'books': get_datas(books),
+        'category': category,
+        'total': total,
+        'total_page': total_page,
+        'pages': pages,
+        'book': b,
+        'categories': categories,
+        'page': page,
+    }
+    return render_to_response('category.html', params)
+
+
+def get_datas(books):
+    res = []
+    for b in books:
+        res.append(get_data(b))
+    return res
 
 
 def page_not_found(request):
