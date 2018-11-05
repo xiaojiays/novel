@@ -17,9 +17,9 @@
                     <ul class="updatelist">
                         {% for book in books %}
                         <li class="headerhui">
-                            <span class="n">[<a href="/category/{{ book.category.pinyin }}.html" title="{{ book.category.name }}}小说">{{ book.category.name }}</a>]&nbsp;&nbsp;<a href="/book/{{ book.pinyin }}.html" title="{{ book.name }}" target="_blank"><strong>{{ book.name }}</strong></a></span>
+                            <span class="n">[<a href="/category/{{ book.category.pinyin }}.html" title="{{ book.category.name }}}小说">{{ book.category.name }}</a>]&nbsp;&nbsp;<a href="/book/{{ book.pinyin }}.html" title="{{ book.name }}"><strong>{{ book.name }}</strong></a></span>
                             <span class="c"><a href="/jump?link={{ book.chapter.link }}" title="{{ book.name }} {{ book.chapter.title }}" target="_blank">{{ book.chapter.title }}</a></span>
-                            <span class="a"><a href="/author/{{ book.author.pinyin }}.html" title="{{ book.author.name }} 作品列表" target="_blank">{{ book.author.name }}</a></span>
+                            <span class="a"><a href="/author/{{ book.author.pinyin }}.html" title="{{ book.author.name }} 作品列表">{{ book.author.name }}</a></span>
                             <span class="t">{{ book.chapter.updated_at|date:'m-d H:i' }}</span>
                             <div class="clear"></div>
                         </li>

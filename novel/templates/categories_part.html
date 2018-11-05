@@ -1,0 +1,7 @@
+<div class="body">
+    <ul class="toplist clearfix">
+        {% for c in categories %}
+        <li><a title="{{ c.name }}" href="/category/{{ c.pinyin }}.html">{{ c.name }}小说</a></li>
+        {% endfor %}
+    </ul>
+</div>
