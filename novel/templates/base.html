@@ -6,79 +6,102 @@
     <link rel="stylesheet" type="text/css" href="/static/base.css?a=2">
 </head>
 <body>
-    <header>
+<header>
 
-        <div class="banner ">
-            <div class="w-all">
-                <ul class="fl">
-                    <li><a href="javascript:;">欢迎您莅临本站</a></li>
-                </ul>
-                <ul class="fr">
-                    <li><i class="pticon pticon-home pticon-lg"></i><a href="javascript:$.pt.setHome('https://www.zhetian.org');">设为首页</a></li>
-                    <li><i class="pticon pticon-star pticon-lg"></i><a href="javascript:$.pt.addFav();">加入收藏</a></li>
-                    <li><i class="pticon pticon-desktop"></i><a href="/novelsearch/index/desktop.html" target="_blank">桌面快捷</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="clear"></div>
-
-        <div class="logosearch w-all ">
-            <div class="logo fl"><a href="/" title="{{ settings.SITE_NAME }}小说网"><img src="/template/defaultv1/public/image/logo.png" alt="{{ settings.SITE_NAME }}小说网"></a></div>
-            <form class="searchbox fl" action="/search">
-                <div class="dropmenu">
-                    <span class="tri"></span>
-                    <ul class="dropmenu-item">
-                        <li data-type="book">书名</li>
-                        <li data-type="author">作者</li>
-                    </ul>
-                </div>
-                <input id="type" name="type" type="hidden" value="book">
-                <label class="fl"><input type="text" name="key" id="key" class="text"></label>
-                <input type="submit" value="搜索" class="searchbtn">
-            </form>
-            <div class="operate fl">
-                <a class="operate-item" title="圣墟" href="/user/history/index.html" style="float:left;margin-top:24px;margin-left: 0px;">
-                    <b>如果没有搜到想看的书，可以点击此处提交给我们</b>
-                </a>
-            </div>
-        </div>
-
-        <nav class="w-all">
-            <ul class="clearfix">
-                <li {% if home_page %} class="active" {% endif %}><a href="/" title="{{ settings.SITE_NAME }}}小说网首页">首页</a></li>
-                <li {% if book_page %} class="active" {% endif %}><a href="/book/{{book.pinyin}}.html" title="{{book.name}}">{{book.name}}</a></li>
-                <li {% if category_page %} class="active" {% endif %}><a href="/category.html" title="小说分类">小说分类</a></li>
-                <li {% if click_page %} class="active" {% endif %}><a href="/rank.html" title="点击排行">点击排行</a></li>
-                <li {% if newest_page %} class="active" {% endif %}><a href="/newest.html" title="最近更新">最近更新</a></li>
-                <li {% if finish_page %} class="active" {% endif %}><a href="/finish.html" title="全本小说">全本小说</a></li>
-                <li {% if trends_page %} class="active" {% endif %}><a href="/trends.html" title="小说动态">小说动态</a></li>
-                <li {% if subject_page %} class="active" {% endif %}><a href="/subject.html" title="专题">专题</a></li>
-                <li {% if contact_page %} class="active" {% endif %}><a href="/contact.html" title="联系我们">联系我们</a></li>
+    <div class="banner ">
+        <div class="w-all">
+            <ul class="fl">
+                <li><a href="javascript:;">欢迎您莅临本站</a></li>
             </ul>
-        </nav>
-    </header>
-    {% block content %}{% endblock %}
-    <footer>
-        <div class="copyright w-all tac">
-            Copyright © 2018-2019 <a href="/" target="_blank" title="{{ settings.SITE_NAME }}小说网">{{ settings.SITE_NAME }}小说网</a> All Rights Reserved .版权所有{{ settings.SITE_NAME }}小说网。<br>
-            本站内容系圣墟小说网根据您的指令搜索各大小说站得到的链接列表，不代表圣墟小说网赞成被搜索网站的内容或立场<br>
-            如果版权人认为在本站放置您的作品有损您的利益，请发邮件至qtshucom#163.com，本站确认后将会立即删除。<br>
-            <br>
+            <ul class="fr">
+                <li><i class="pticon pticon-home pticon-lg"></i><a id="home" href="javascript:;">设为首页</a></li>
+                <li><i class="pticon pticon-star pticon-lg"></i><a id="favorites" href="javascript:;">加入收藏</a></li>
+            </ul>
         </div>
-    </footer>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="logosearch w-all ">
+        <div class="logo fl"><a href="/" title="{{ settings.SITE_NAME }}小说网"><img
+                src="/template/defaultv1/public/image/logo.png" alt="{{ settings.SITE_NAME }}小说网"></a></div>
+        <form class="searchbox fl" action="/search">
+            <div class="dropmenu">
+                <span class="tri"></span>
+                <ul class="dropmenu-item">
+                    <li data-type="book">书名</li>
+                    <li data-type="author">作者</li>
+                </ul>
+            </div>
+            <input id="type" name="type" type="hidden" value="book">
+            <label class="fl"><input type="text" name="key" id="key" class="text"></label>
+            <input type="submit" value="搜索" class="searchbtn">
+        </form>
+        <div class="operate fl">
+            <a class="operate-item" title="圣墟" href="/user/history/index.html"
+               style="float:left;margin-top:24px;margin-left: 0px;">
+                <b>如果没有搜到想看的书，可以点击此处提交给我们</b>
+            </a>
+        </div>
+    </div>
+
+    <nav class="w-all">
+        <ul class="clearfix">
+            <li {% if home_page %} class="active" {% endif %}><a href="/" title="{{ settings.SITE_NAME }}}小说网首页">首页</a>
+            </li>
+            <li {% if book_page %} class="active" {% endif %}><a href="/book/{{book.pinyin}}.html"
+                                                                 title="{{book.name}}">{{book.name}}</a></li>
+            <li {% if category_page %} class="active" {% endif %}><a href="/category.html" title="小说分类">小说分类</a></li>
+            <li {% if rank_page %} class="active" {% endif %}><a href="/rank.html" title="排行榜">排行榜</a></li>
+            <li {% if newest_page %} class="active" {% endif %}><a href="/newest.html" title="最近更新">最近更新</a></li>
+            <li {% if finish_page %} class="active" {% endif %}><a href="/finish.html" title="全本小说">全本小说</a></li>
+            <li {% if trends_page %} class="active" {% endif %}><a href="/trends.html" title="小说动态">小说动态</a></li>
+            <li {% if subject_page %} class="active" {% endif %}><a href="/subject.html" title="专题">专题</a></li>
+            <li {% if contact_page %} class="active" {% endif %}><a href="/contact.html" title="联系我们">联系我们</a></li>
+        </ul>
+    </nav>
+</header>
+{% block content %}{% endblock %}
+<footer>
+    <div class="copyright w-all tac">
+        Copyright © 2018-2019 <a href="/" title="{{ settings.SITE_NAME }}小说网">{{ settings.SITE_NAME }}小说网</a> All Rights Reserved .版权所有{{ settings.SITE_NAME }}小说网。<br>
+        本站内容系{{ settings.SITE_NAME }}小说网根据您的指令搜索各大小说站得到的链接列表，不代表{{ settings.SITE_NAME }}小说网赞成被搜索网站的内容或立场<br>
+        如果版权人认为在本站放置您的作品有损您的利益，请发邮件至{{ settings.EMAIL }}，本站确认后将会立即删除。<br>
+        <br>
+    </div>
+</footer>
 </body>
 <script type="text/javascript" src="/static/jquery.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-       $(".dropmenu-item").find("li").live("click",  function () {
-           if ($("#type").val() != $(this).attr('data-type')) {
-               $("#type").val($(this).attr('data-type'));
-               var obj = $(this);
-               $(this).remove();
-               $(".dropmenu-item").find("li").before(obj);
-           }
-       });
+        $(".dropmenu-item").find("li").live("click", function () {
+            if ($("#type").val() != $(this).attr('data-type')) {
+                $("#type").val($(this).attr('data-type'));
+                var obj = $(this);
+                $(this).remove();
+                $(".dropmenu-item").find("li").before(obj);
+            }
+        });
+
+        $("#favorites").click(function () {
+            var ctrl = (navigator.userAgent.toLowerCase()).indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL';
+            if (document.all) {
+                window.external.addFavorite('{{settings.SITE}}', '{{settings.SITE_NAME}}')
+            } else if (window.sidebar) {
+                window.sidebar.addPanel('{{settings.SITE_NAME}}', '{{settings.SITE}}', "")
+            } else {
+                alert('添加失败\n您可以尝试通过快捷键' + ctrl + ' + D 加入到收藏夹~')
+            }
+        });
+
+        $("#addHomePage").click(function () {
+            if (document.all) {
+                document.body.style.behavior = 'url(#default#homepage)';
+                document.body.setHomePage(document.URL);
+            } else {
+                alert("设置首页失败，请手动设置！");
+            }
+        });
     });
 </script>
 </html>

@@ -66,6 +66,7 @@ class Book(models.Model):
     default = models.BooleanField(default=False)
     img = models.ImageField(upload_to='images', default='')
     description = models.CharField(max_length=200, default='')
+    clicks = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField()
 

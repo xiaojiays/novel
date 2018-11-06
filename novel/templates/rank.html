@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="w-all">
+    <nav class="mt20">
+        <ul class="clearfix">
+            <li><a href="/" title="{{settings.SITE_NAME}}小说网首页"><i class="pticon pticon-home pticon-lg"></i>
+                {{settings.SITE_NAME}}小说网首页</a><i class="pticon pticon-angle-right icon"></i></li>
+            <li><a href="/rank.html" title="热门小说">热门小说TOP50</a></li>
+        </ul>
+    </nav>
+    <div class="container clearfix mt20">
+        <div class="w-left">
+            <div class="card">
+                <div class="header line">
+                    <h2>热门小说TOP50</h2>
+                </div>
+                <div class="body">
+                    <ul class="updatelist">
+                        {% for b in books %}
+                        <li class="headerhui">
+                            <span class="n">[<a href="/category/{{b.category.pinyin}}}.html" title="{{b.category.name}}小说">{{b.category.name}}</a>]&nbsp;&nbsp;<a
+                                    href="/book/{{b.pinyin}}.html" title="{{b.name}}"><strong>{{b.name}}</strong></a></span>
+                            <span class="c"><a href="/jump?link={{b.chapter.link}}" title="{{b.name}} {{b.chapter.title}}" target="_blank">{{b.chapter.title}}</a></span>
+                            <span class="a"><a href="/author/{{b.author.pinyin}}.html" title="{{b.author.name}} 作品列表">{{b.author.name}}</a></span>
+                            <span class="t">{{b.chapter.updated_at|date:'m-d H:i'}}</span>
+                            <div class="clear"></div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="w-right">
+            <div class="card">
+                <div class="header">
+                    <h3>本月热门</h3>
+                </div>
+                <div class="body">
+                    <ul class="rightlist">
+                        <li><i class="first">1</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/"
+                                                           title="辰东 作品大全">辰东</a></span><a href="/1361/"
+                                                                                           title="圣墟">圣墟</a></li>
+                        <li><i class="first">2</i><span><a href="/author/%E8%8E%AB%E9%BB%98/"
+                                                           title="莫默 作品大全">莫默</a></span><a href="/94/"
+                                                                                           title="武炼巅峰">武炼巅峰</a></li>
+                        <li><i class="first">3</i><span><a href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/" title="逆苍天 作品大全">逆苍天</a></span><a
+                                href="/29/" title="杀神">杀神</a></li>
+                        <li><i>4</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a
+                                href="/148/" title="完美世界">完美世界</a></li>
+                        <li><i>5</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a
+                                href="/12/" title="遮天">遮天</a></li>
+                        <li><i>6</i><span><a href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/"
+                                             title="鱼人二代 作品大全">鱼人二代</a></span><a href="/38/" title="校花的贴身高手">校花的贴身高手</a>
+                        </li>
+                        <li><i>7</i><span><a href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/"
+                                             title="风凌天下 作品大全">风凌天下</a></span><a href="/26/" title="傲世九重天">傲世九重天</a>
+                        </li>
+                        <li><i>8</i><span><a href="/author/%E6%88%91%E5%90%83%E8%A5%BF%E7%BA%A2%E6%9F%BF/"
+                                             title="我吃西红柿 作品大全">我吃西红柿</a></span><a href="/96/" title="莽荒纪">莽荒纪</a></li>
+                        <li><i>9</i><span><a href="/author/%E8%8A%B1%E9%83%BD%E5%A4%A7%E5%B0%91/"
+                                             title="花都大少 作品大全">花都大少</a></span><a href="/408/" title="极品全能学生">极品全能学生</a>
+                        </li>
+                        <li><i>10</i><span><a href="/author/%E5%94%90%E5%AE%B6%E4%B8%89%E5%B0%91/" title="唐家三少 作品大全">唐家三少</a></span><a
+                                href="/88/" title="绝世唐门">绝世唐门</a></li>
+                        <li><i>11</i><span><a href="/author/%E8%9B%87%E5%8F%91%E4%BC%98%E9%9B%85/" title="蛇发优雅 作品大全">蛇发优雅</a></span><a
+                                href="/2864/" title="神医弃女：邪王霸爱小狂妃">神医弃女：邪王霸爱小狂妃</a></li>
+                        <li><i>12</i><span><a href="/author/%E5%A4%A9%E8%9A%95%E5%9C%9F%E8%B1%86/" title="天蚕土豆 作品大全">天蚕土豆</a></span><a
+                                href="/14/" title="武动乾坤">武动乾坤</a></li>
+                        <li><i>13</i><span><a href="/author/%E9%BB%84%E9%87%91%E6%88%98%E5%A3%AB/" title="黄金战士 作品大全">黄金战士</a></span><a
+                                href="/42/" title="重生之妖孽人生">重生之妖孽人生</a></li>
+                        <li><i>14</i><span><a href="/author/%E5%AD%A4%E5%8D%95%E5%9C%B0%E9%A3%9E/" title="孤单地飞 作品大全">孤单地飞</a></span><a
+                                href="/466/" title="神道丹尊">神道丹尊</a></li>
+                        <li><i>15</i><span><a href="/author/%E7%A6%B9%E6%9E%AB/" title="禹枫 作品大全">禹枫</a></span><a
+                                href="/210/" title="武神天下">武神天下</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mt20">
+                <div class="header">
+                    <h3>本周热门</h3>
+                </div>
+                <div class="body">
+                    <ul class="rightlist">
+                        <li><i class="first">1</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/"
+                                                           title="辰东 作品大全">辰东</a></span><a href="/1361/"
+                                                                                           title="圣墟">圣墟</a></li>
+                        <li><i class="first">2</i><span><a href="/author/%E8%8E%AB%E9%BB%98/"
+                                                           title="莫默 作品大全">莫默</a></span><a href="/94/"
+                                                                                           title="武炼巅峰">武炼巅峰</a></li>
+                        <li><i class="first">3</i><span><a href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/" title="逆苍天 作品大全">逆苍天</a></span><a
+                                href="/29/" title="杀神">杀神</a></li>
+                        <li><i>4</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a
+                                href="/148/" title="完美世界">完美世界</a></li>
+                        <li><i>5</i><span><a href="/author/%E8%BE%B0%E4%B8%9C/" title="辰东 作品大全">辰东</a></span><a
+                                href="/12/" title="遮天">遮天</a></li>
+                        <li><i>6</i><span><a href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/"
+                                             title="鱼人二代 作品大全">鱼人二代</a></span><a href="/38/" title="校花的贴身高手">校花的贴身高手</a>
+                        </li>
+                        <li><i>7</i><span><a href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/"
+                                             title="风凌天下 作品大全">风凌天下</a></span><a href="/26/" title="傲世九重天">傲世九重天</a>
+                        </li>
+                        <li><i>8</i><span><a href="/author/%E6%88%91%E5%90%83%E8%A5%BF%E7%BA%A2%E6%9F%BF/"
+                                             title="我吃西红柿 作品大全">我吃西红柿</a></span><a href="/96/" title="莽荒纪">莽荒纪</a></li>
+                        <li><i>9</i><span><a href="/author/%E8%8A%B1%E9%83%BD%E5%A4%A7%E5%B0%91/"
+                                             title="花都大少 作品大全">花都大少</a></span><a href="/408/" title="极品全能学生">极品全能学生</a>
+                        </li>
+                        <li><i>10</i><span><a href="/author/%E5%94%90%E5%AE%B6%E4%B8%89%E5%B0%91/" title="唐家三少 作品大全">唐家三少</a></span><a
+                                href="/88/" title="绝世唐门">绝世唐门</a></li>
+                        <li><i>11</i><span><a href="/author/%E8%9B%87%E5%8F%91%E4%BC%98%E9%9B%85/" title="蛇发优雅 作品大全">蛇发优雅</a></span><a
+                                href="/2864/" title="神医弃女：邪王霸爱小狂妃">神医弃女：邪王霸爱小狂妃</a></li>
+                        <li><i>12</i><span><a href="/author/%E5%A4%A9%E8%9A%95%E5%9C%9F%E8%B1%86/" title="天蚕土豆 作品大全">天蚕土豆</a></span><a
+                                href="/14/" title="武动乾坤">武动乾坤</a></li>
+                        <li><i>13</i><span><a href="/author/%E9%BB%84%E9%87%91%E6%88%98%E5%A3%AB/" title="黄金战士 作品大全">黄金战士</a></span><a
+                                href="/42/" title="重生之妖孽人生">重生之妖孽人生</a></li>
+                        <li><i>14</i><span><a href="/author/%E5%AD%A4%E5%8D%95%E5%9C%B0%E9%A3%9E/" title="孤单地飞 作品大全">孤单地飞</a></span><a
+                                href="/466/" title="神道丹尊">神道丹尊</a></li>
+                        <li><i>15</i><span><a href="/author/%E7%A6%B9%E6%9E%AB/" title="禹枫 作品大全">禹枫</a></span><a
+                                href="/210/" title="武神天下">武神天下</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mt20">
+                <div class="header line">
+                    <h3>最新入库</h3>
+                </div>
+                <div class="body">
+                    <ul class="rightlist">
+                        <li><i class="first">1</i><span>11-05</span><a href="/29772/" title="都市之妖孽大少">都市之妖孽大少</a></li>
+                        <li><i class="first">2</i><span>11-05</span><a href="/29771/" title="重铸星海">重铸星海</a></li>
+                        <li><i class="first">3</i><span>11-05</span><a href="/29770/" title="御兽师的悠闲生活">御兽师的悠闲生活</a></li>
+                        <li><i>4</i><span>11-05</span><a href="/29769/" title="死亡短视频">死亡短视频</a></li>
+                        <li><i>5</i><span>11-05</span><a href="/29768/" title="神宠降临">神宠降临</a></li>
+                        <li><i>6</i><span>11-05</span><a href="/29767/" title="重返诸天">重返诸天</a></li>
+                        <li><i>7</i><span>11-05</span><a href="/29765/" title="快穿之专治各种不服">快穿之专治各种不服</a></li>
+                        <li><i>8</i><span>11-05</span><a href="/29766/" title="星际挑战宇宙">星际挑战宇宙</a></li>
+                        <li><i>9</i><span>11-05</span><a href="/29764/" title="匠心大宋">匠心大宋</a></li>
+                        <li><i>10</i><span>11-05</span><a href="/29763/" title="星辰恋三千愁">星辰恋三千愁</a></li>
+                        <li><i>11</i><span>11-05</span><a href="/29762/" title="惟愿初见似随心">惟愿初见似随心</a></li>
+                        <li><i>12</i><span>11-05</span><a href="/29761/" title="暗里着迷，明里恋你">暗里着迷，明里恋你</a></li>
+                        <li><i>13</i><span>11-05</span><a href="/29760/" title="剑仙在上">剑仙在上</a></li>
+                        <li><i>14</i><span>11-05</span><a href="/29759/" title="网红制霸娱乐圈">网红制霸娱乐圈</a></li>
+                        <li><i>15</i><span>11-05</span><a href="/29758/" title="偷心娇妻别想逃">偷心娇妻别想逃</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

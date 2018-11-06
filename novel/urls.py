@@ -28,8 +28,12 @@ urlpatterns = [
     re_path(r'^category/(?P<pinyin>\w+)(-(?P<page>\d+))?\.html$', views.category_list),
     re_path(r'^book/(?P<pinyin>\w+)\.html', views.book),
     re_path(r'(?P<pinyin>\w+)/chapters(-(?P<page>\d+))?\.html', views.chapter_list),
-    re_path('newest(-(?P<page>\d+))?.html', views.newest),
-    re_path('finish(-(?P<page>\d+))?.html', views.finish),
+    re_path(r'^newest(-(?P<page>\d+))?\.html', views.newest),
+    re_path(r'^finish(-(?P<page>\d+))?\.html', views.finish),
+    re_path(r'^rank(-(?P<type>[a-zA-Z]+))?\.html', views.rank),
+    re_path(r'^author/(?P<pinyin>\w+)\.html', views.author_works),
+    re_path(r'^trends(-(?P<page>\d+))?\.html', views.trends),
+    re_path(r'^subject(-(?P<page>\d+))?\.html', views.subject),
 ]
 
 handler404 = views.page_not_found

@@ -17,7 +17,6 @@ def home(request, *args, **kwargs):
     total = book_list.count()
     total_page = math.ceil(total / size)
     pages = get_pages(page, total_page)
-    book = get_default_book()
 
     data = []
     for b in books:
@@ -33,7 +32,7 @@ def home(request, *args, **kwargs):
         'data': data,
         'pages': pages,
         'page': page,
-        'book': book,
+        'book': get_default_book(),
 
     }
     return render_to_response('home.html', params)
@@ -346,6 +345,52 @@ def get_datas(books):
     for b in books:
         res.append(get_data(b))
     return res
+
+
+def rank(request, *args, **kwargs):
+    books = Book.objects.filter(status=0).order_by('-clicks').all()[:50]
+    params = {
+        'settings': settings,
+        'book': get_default_book(),
+        'rank_page': True,
+        'books': get_datas(books),
+    }
+    return render_to_response('rank.html', params)
+
+
+def author_works(request, *args, **kwargs):
+    pinyin = kwargs.get('pinyin')
+    if pinyin is None:
+        return home(request)
+    author = Author.objects.filter(pinyin=pinyin).first()
+    if author is None:
+        return home(request)
+    books = Book.objects.filter(authors=author).order_by('-id').all()
+    params = {
+        'settings': settings,
+        'book': get_default_book(),
+        'author': author,
+        'books': get_datas(books),
+    }
+    return render_to_response('works.html', params)
+
+
+def trends(request, *args, **kwargs):
+    params = {
+        'settings': settings,
+        'book': get_default_book(),
+        'trend_page': True,
+    }
+    return render_to_response('trends.html', params)
+
+
+def subject(request, *args, **kwargs):
+    params = {
+        'settings': settings,
+        'book': get_default_book(),
+        'subject_page': True,
+    }
+    return render_to_response('subject.html', params)
 
 
 def page_not_found(request):
