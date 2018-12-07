@@ -37,48 +37,15 @@
                 </div>
             </div>
             <div class="w-right">
-                <div class="card pt-tab">
-                    <div class="header tab pt-tab-nav">
-                        <ul class="clearfix">
-                            <li class="active">本月热门</li>
-                            <li>本周热门</li>
-                        </ul>
+                <div class="card">
+                    <div class="header line">
+                        <h3><a title="热门小说" href="javascript:;">热门小说</a></h3>
                     </div>
-                    <div class="body pt-tab-con">
+                    <div class="body" style="height:125px;overflow-y: scroll;overflow-x: hidden;">
                         <ul class="rightlist">
-                            <li><i class="first">1</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="圣墟" href="/1361/">圣墟</a></li>
-                            <li><i class="first">2</i><span><a title="莫默 作品大全" href="/author/%E8%8E%AB%E9%BB%98/">莫默</a></span><a
-                                    title="武炼巅峰" href="/94/">武炼巅峰</a></li>
-                            <li><i class="first">3</i><span><a title="逆苍天 作品大全"
-                                                               href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/">逆苍天</a></span><a
-                                    title="杀神" href="/29/">杀神</a></li>
-                            <li><i>4</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="完美世界" href="/148/">完美世界</a></li>
-                            <li><i>5</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="遮天" href="/12/">遮天</a></li>
-                            <li><i>6</i><span><a title="鱼人二代 作品大全" href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/">鱼人二代</a></span><a
-                                    title="校花的贴身高手" href="/38/">校花的贴身高手</a></li>
-                            <li><i>7</i><span><a title="风凌天下 作品大全" href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/">风凌天下</a></span><a
-                                    title="傲世九重天" href="/26/">傲世九重天</a></li>
-
-                        </ul>
-                        <ul class="rightlist none">
-                            <li><i class="first">1</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="圣墟" href="/1361/">圣墟</a></li>
-                            <li><i class="first">2</i><span><a title="莫默 作品大全" href="/author/%E8%8E%AB%E9%BB%98/">莫默</a></span><a
-                                    title="武炼巅峰" href="/94/">武炼巅峰</a></li>
-                            <li><i class="first">3</i><span><a title="逆苍天 作品大全"
-                                                               href="/author/%E9%80%86%E8%8B%8D%E5%A4%A9/">逆苍天</a></span><a
-                                    title="杀神" href="/29/">杀神</a></li>
-                            <li><i>4</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="完美世界" href="/148/">完美世界</a></li>
-                            <li><i>5</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="遮天" href="/12/">遮天</a></li>
-                            <li><i>6</i><span><a title="鱼人二代 作品大全" href="/author/%E9%B1%BC%E4%BA%BA%E4%BA%8C%E4%BB%A3/">鱼人二代</a></span><a
-                                    title="校花的贴身高手" href="/38/">校花的贴身高手</a></li>
-                            <li><i>7</i><span><a title="风凌天下 作品大全" href="/author/%E9%A3%8E%E5%87%8C%E5%A4%A9%E4%B8%8B/">风凌天下</a></span><a
-                                    title="傲世九重天" href="/26/">傲世九重天</a></li>
+                            {% for book in hottest %}
+                            <li><i {% if forloop.counter <= 3 %}class="first"{% endif %}>{{ forloop.counter }}</i><span><a title="{{ book.author.name }} 作品大全" href="/author/{{ book.author.pinyin }}.html">{{ book.author.name }}</a></span><a title="{{ book.name }}" href="/book/{{ book.pinyin }}.html">{{ book.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -113,85 +80,26 @@
             <div class="w-right">
                 <div class="card">
                     <div class="header line">
-                        <h3><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东作品大全</a></h3>
+                        <h3><a title="{{book.author.name}} 作品大全" href="/author/{{book.author.pinyin}}">{{book.author.name}}作品大全</a></h3>
                     </div>
                     <div class="body" style="height:125px;overflow-y: scroll;overflow-x: hidden;">
                         <ul class="rightlist">
-                            <li><i class="first">1</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="圣墟" href="/1361/">圣墟</a></li>
-                            <li><i class="first">2</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="神墓" href="/1419/">神墓</a></li>
-                            <li><i class="first">3</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="长生界" href="/641/">长生界</a></li>
-                            <li><i>4</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="遮天" href="/12/">遮天</a></li>
-                            <li><i>5</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="完美世界" href="/148/">完美世界</a></li>
-                            <li><i>6</i><span><a title="辰东 作品大全" href="/author/%E8%BE%B0%E4%B8%9C/">辰东</a></span><a
-                                    title="不死不灭" href="/224/">不死不灭</a></li>
+                            {% for book in archives %}
+                            <li><i {% if forloop.counter <= 3 %}class="first"{% endif %}>{{forloop.counter}}</i><span><a title="{{ book.author.name }} 作品大全" href="/author/{{ book.author.pinyin }}.html">{{book.author.name}}</a></span><a
+                                    title="{{book.name}}" href="/book/{{book.pinyin}}.html">{{book.name}}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="card mt20">
                     <div class="header line">
-                        <h3>圣墟 站点列表</h3>
+                        <h3>{{ book.name }} 站点列表</h3>
                     </div>
                     <div class="body" style="height:154px;overflow-y: scroll;overflow-x: hidden;">
                         <ul class="rightlist">
-                            <li><i class="first">1</i><a title="圣墟 起点中文" href="/1361/list_qidian/">起点中文</a></li>
-                            <li><i class="first">2</i><a title="圣墟 飘天文学" href="/1361/list_piaotian/">飘天文学</a></li>
-                            <li><i class="first">3</i><a title="圣墟 再读读" href="/1361/list_zaidudu/">再读读</a></li>
-                            <li><i>4</i><a title="圣墟 少年文学" href="/1361/list_snwx/">少年文学</a></li>
-                            <li><i>5</i><a title="圣墟 2k小说" href="/1361/list_2kxs/">2k小说</a></li>
-                            <li><i>6</i><a title="圣墟 大家读" href="/1361/list_dajiadu/">大家读</a></li>
-                            <li><i>7</i><a title="圣墟 番茄小说网" href="/1361/list_fqxsw/">番茄小说网</a></li>
-                            <li><i>8</i><a title="圣墟 大海中文" href="/1361/list_dhzw/">大海中文</a></li>
-                            <li><i>9</i><a title="圣墟 E小说" href="/1361/list_exiaoshuo/">E小说</a></li>
-                            <li><i>10</i><a title="圣墟 三七中文" href="/1361/list_37zw/">三七中文</a></li>
-                            <li><i>11</i><a title="圣墟 999文学" href="/1361/list_999wx/">999文学</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card mt20 " style="height: ;">
-                    <div class="header line">
-                        <h3>最新动态</h3>
-                    </div>
-                    <div class="body" style="height:347px;overflow: hidden">
-                        <ul class="rightlist">
-                            <li>
-                                <a title="辰东小说主角分析，《圣墟》和前面的主角布局太大，辣眼睛啊" href="/article/624.html" target="_blank">辰东小说主角分析，《圣墟》和前面的主角布局太大，辣眼睛啊</a>
-                            </li>
-                            <li>
-                                <a title="圣墟其他角色" href="/article/623.html" target="_blank">圣墟其他角色</a>
-                            </li>
-                            <li>
-                                <a title="圣墟作品评价" href="/article/622.html" target="_blank">圣墟作品评价</a>
-                            </li>
-                            <li>
-                                <a title="圣墟珍稀宝树" href="/article/621.html" target="_blank">圣墟珍稀宝树</a>
-                            </li>
-                            <li>
-                                <a title="圣墟奇兵异宝" href="/article/620.html" target="_blank">圣墟奇兵异宝</a>
-                            </li>
-                            <li>
-                                <a title="圣墟功法" href="/article/619.html" target="_blank">圣墟功法</a>
-                            </li>
-                            <li>
-                                <a title="圣墟势力" href="/article/618.html" target="_blank">圣墟势力</a>
-                            </li>
-                            <li>
-                                <a title="圣墟主角敌人" href="/article/617.html" target="_blank">圣墟主角敌人</a>
-                            </li>
-                            <li>
-                                <a title="圣墟主角" href="/article/616.html" target="_blank">圣墟主角</a>
-                            </li>
-                            <li>
-                                <a title="圣墟境界划分" href="/article/615.html" target="_blank">圣墟境界划分</a>
-                            </li>
-                            <li style="margin-top: 13px;">
-                                <a title="最新文章列表" href="/weixin/list/1.html">更多最新文章...</a>
-                            </li>
+                            {% for source in sources %}
+                            <li><i {% if forloop.counter <= 3 %}class="first"{% endif %}>{{forloop.counter}}</i><a title="{{source.name}} 起点中文" href="/source/{{source.pinyin}}.html">{{ source.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

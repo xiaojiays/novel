@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from novel import views
+from novel import views, mobile
 
 urlpatterns = [
     path('ad/min/', admin.site.urls),
+    path('m', mobile.home),
     path('', views.home),
     path('jump', views.jump),
     path('search', views.search),

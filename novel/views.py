@@ -33,6 +33,8 @@ def home(request, *args, **kwargs):
         'pages': pages,
         'page': page,
         'book': get_default_book(),
+        'hottest': hottest_books(),
+        'newest': newest_books(),
 
     }
     return render_to_response('home.html', params)
@@ -102,6 +104,9 @@ def book(request, *args, **kwargs):
         'settings': settings,
         'chapters': chapters,
         'book_page': True,
+        'hottest': hottest_books(7),
+        'archives': archives(data.get('author')),
+        'sources': get_sources(b),
     }
 
     return render_to_response('book.html', params)
@@ -251,6 +256,8 @@ def show_list(books, page):
         'pages': pages,
         'book': b,
         'settings': settings,
+        'newest': newest_books(),
+        'hottest': hottest_books(),
     }
     return params
 
@@ -336,6 +343,8 @@ def category_list(request, *args, **kwargs):
         'book': b,
         'categories': categories,
         'page': page,
+        'hottest': hottest_books(),
+        'newest': newest_books(),
     }
     return render_to_response('category.html', params)
 
@@ -354,6 +363,8 @@ def rank(request, *args, **kwargs):
         'book': get_default_book(),
         'rank_page': True,
         'books': get_datas(books),
+        'hottest': hottest_books(),
+        'newest': newest_books(),
     }
     return render_to_response('rank.html', params)
 
@@ -391,6 +402,26 @@ def subject(request, *args, **kwargs):
         'subject_page': True,
     }
     return render_to_response('subject.html', params)
+
+
+def hottest_books(size=15):
+    books = Book.objects.filter(status=0).order_by("-clicks").all()[:size]
+    return get_datas(books)
+
+
+def newest_books(size=15):
+    books = Book.objects.filter(status=0).order_by('-id').all()[:size]
+    return get_datas(books)
+
+
+def archives(author):
+    books = Book.objects.filter(status=0).filter(authors=author).order_by('-id').all()
+    return get_datas(books)
+
+
+def get_sources(b):
+    sources = b.sources.all()
+    return sources
 
 
 def page_not_found(request):
