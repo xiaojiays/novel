@@ -187,6 +187,8 @@ def chapter_list(request, *args, **kwargs):
         'total': total,
         'book_page': True,
         'settings': settings,
+        'newest': newest_books(),
+        'hottest': hottest_books(),
     }
 
     return render_to_response('chapters.html', params)
