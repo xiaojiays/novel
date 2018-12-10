@@ -430,3 +430,11 @@ def page_not_found(request):
 
 def server_error(request):
     return home(request)
+
+
+def contact(request):
+    params = {
+        'book': get_default_book(),
+        'contact_page': True,
+    }
+    return render_to_response('contact.html', params)

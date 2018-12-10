@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>{{book.name}}_{{book.name}}小说_{{book.name}}最新章节_{{book.author.name}} - {{settings.SITE_NAME}}小说网</title>
+    <meta name="keywords"
+          content="{{book.name}},{{book.name}}小说,{{book.name}}{{book.author.name}},{{book.name}}最新章节,{{book.name}}全文阅读,圣墟无弹窗">
+    <meta name="description"
+          content="{{settings.SITE_NAME}}小说网提供《{{book.name}}》小说最新章节的搜索和转码阅读，更新超级快, {{book.name}}{{book.author.name}}无弹窗阅读，页面干净清爽，希望大家收藏!">
+    <link rel="stylesheet" href="/static/wap.css"/>
+    <meta property="og:type" content="novel"/>
+    <meta property="og:title" content="{{book.name}}"/>
+    <meta property="og:description" content="{{book.desc}}"/>
+    <meta property="og:image" content="/static/{{book.img}}"/>
+    <meta property="og:novel:category" content="{{book.category.name}}"/>
+    <meta property="og:novel:author" content="{{book.author.name}}"/>
+    <meta property="og:novel:book_name" content="{{book.name}}"/>
+    <meta property="og:novel:read_url" content="/m/book/{{book.pinyin}}.html"/>
+    <meta property="og:url" content="/m/book/{{book.pinyin}}.html"/>
+    <meta property="og:novel:status" content="{% if book.finish %}连载中{% else %}已完结{% endif %}"/>
+    <meta property="og:novel:update_time" content="{{book.chapter.created_at}}"/>
+    <meta property="og:novel:latest_chapter_name" content="{{book.chapter.title}}"/>
+    <meta property="og:novel:latest_chapter_url" content="/jump?link={{book.chapter.link}}"/>
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="max-age=0"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="MobileOptimized" content="240"/>
+    <meta name="applicable-device" content="mobile"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+</head>
+<body>
+<header class="ptm-bar ptm-bar-nav  ptm-fix">
+    <a class="ptm-pull-left" href="/" title="{{settings.SITE_NAME}}小说网">
+        <span class="ptm-iconfont fa fa-home" style="font-size:22px;"></span>
+    </a>
+    <div class="ptm-title">{{book.name}}</div>
+</header>
+<section class="ptm-content pt-infopage" style="margin-top:45px;background: #fff" data-id="1361">
+    <div style="background: #fff;height:auto;margin-bottom:10px;">
+        <script type="text/javascript">showads('pagetopad1');</script>
+    </div>
+    <div class="baseinfo">
+        <img src="/static/{{book.img}}" title="{{book.name}}" alt="{{book.name}}">
+        <div class="pt-novel">
+            <h1 class="pt-name"><a href="/m/book/{{book.pinyin}}.html" title="{{book.name}}">{{book.name}}</a></h1>
+            <div class="pt-info">作者:<a href="/m/author/{{book.author.pinyin}}.html" title="{{book.author.name}}">{{book.author.name}}</a></div>
+            <div class="pt-info">分类:<a href="/m/category/{{book.category.pinyin}}.html" title="{{book.category.name}}">{{book.category.name}}</a></div>
+            <div class="pt-info">更新:{{book.chapter.created_at|date:'Y-m-d H:i:s'}}</div>
+        </div>
+    </div>
+    <div class="twobutton ptm-clearfix">
+        <div class="ptm-col-xs-6">
+            <a class="ptm-btn ptm-btn-warning ptm-btn-block" href="/jump?link={{book.chapter.link}}" rel="nofollow">开始阅读</a>
+        </div>
+        <div class="ptm-col-xs-6">
+            <a class="ptm-btn ptm-btn-primary ptm-btn-block" href="/m/{{book.pinyin}}/chapters.html">查看目录</a>
+        </div>
+    </div>
+    <div class="ptm-line-x"></div>
+    <div style="height:auto;overflow:hidden;">
+        <script type="text/javascript">showbookinfo('pagetopad2');</script>
+    </div>
+    <div class="intro">
+        　　{{book.desc}}
+    </div>
+</section>
+<section class="pt-infopage-more">
+    <div class="ptm-card" style="margin-top:15px;">
+        <div class="ptm-card-header">
+            {{book.name}}最近章节
+        </div>
+        <div class="ptm-card-content pt-dir">
+            <ul class="ptm-list-view">
+                {% for chapter in chapters %}
+                <li class="ptm-list-view-cell">
+                    <a class="ptm-arrow-right" href="/jump?link={{chapter.link}}" title="{{book.name}} {{chapter.title}} {{chapter.created_at|date:'Y-m-d H:i:s'}}">{{chapter.title}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="ptm-card-footer" style="font-size:14px;">
+            <a href="/m/{{book.pinyin}}/chapters.html">查看目录></a>
+        </div>
+    </div>
+
+    <div class="ptm-card" style="margin-top:10px;">
+        <div class="ptm-card-header ptm-clearfix">
+            {{book.author.name}}作品大全
+        </div>
+        <div class="ptm-card-content">
+            <ul class="pt-card pt-card-3">
+                {% for a in archives %}
+                <li>
+                    <div class="pt-cover">
+                        <a href="/m/book/{{a.pinyin}}.html" title="{{a.name}}">
+                            <img src="/static/{{a.img}}" alt="{{a.name}}">
+                        </a>
+                    </div>
+                    <div class="pt-novel">
+                        <div class="pt-name" style="margin-bottom:8px;"><a href="/m/book/{{a.pinyin}}.html" title="{{a.name}}">{{a.name}}</a></div>
+                        <div class="pt-author"><a href="/m/author/{{a.author.pinyin}}.html" title="{{a.author.name}}">{{a.author.name}}</a> | <a
+                                href="/m/category/{{a.category.pinyin}}.html" title="{{a.category.name}}">{{a.category.name}}</a> | 连载中
+                        </div>
+                        <div class="pt-author ptm-text-cut"><a href="/jump?link={{a.chapter.link}}" title="{{a.chapter.title}}">{{a.chapter.title}}</a>
+                        </div>
+                        <div class="pt-info">更新时间：{{a.chapter.created_at|date:'Y-m-d H:i:s'}}</div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="ptm-card" style="margin-top:15px;">
+        <div class="ptm-card-header ptm-clearfix">
+            <div class="ptm-pull-left">
+                热门推荐
+            </div>
+        </div>
+        <div class="ptm-card-content" style="padding:0">
+            <ul class="ptm-list-view ptm-grid-view pt-card-1">
+                {% for hot in hottest %}
+                <li class="ptm-list-view-cell ptm-img ptm-col-xs-4">
+                    <div class="imgarea">
+                        <a href="/m/book/{{hot.pinyin}}.html" title="{{hot.name}}">
+                            <img class="ptm-img-object" src="/static/{{hot.img}}" alt="{{hot.name}}">
+                        </a>
+                    </div>
+                    <div class="ptm-img-body">
+                        <span class="ptm-block pt-name ptm-text-cut ptm-text-left">
+                            <a href="/m/book/{{hot.pinyin}}.html" title="{{hot.name}}">{{hot.name}}</a>
+                        </span>
+                        <span class="ptm-block pt-author ptm-text-cut ptm-text-left">
+                            <a href="/m/author/{{hot.author.pinyin}}.html" title="{{hot.author.name}}">{{hot.author.name}}</a></span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<div class="ptm-line-x"></div>
+<div class="footer">
+    <p>本站系基于互联网搜索引擎技术为您提供信息检索服务。</p>
+    <p>Copyright ©2018 </p>
+</div>
+</body>
+</html>

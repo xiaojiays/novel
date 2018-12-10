@@ -1,0 +1,14 @@
+{% extends 'm/m.html' %}
+{% block content %}
+<div class="categorylist" style="margin-top:5px;">
+        <ul>
+            {% for cate in categories %}
+            <li>
+                <a class="item" href="/m/category/{{cate.pinyin}}.html">
+                    <div class="name"  style="border-right: none;">{{cate.name}}</div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
