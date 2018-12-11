@@ -132,3 +132,9 @@ def chapter_pages(total, size):
         res.append(str(i) + '-' + str(i + size - 1) + '章')
         i += 50
     return res
+
+
+def search_list(request, *args, **kwargs):
+    keyword = request.GET.get('key')
+    books = Book.objects.filter(status=0).filter(name__icontains=keyword).all()
+    return render(request, books, keyword + '搜索结果', '/search', kwargs)

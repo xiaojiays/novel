@@ -25,6 +25,7 @@ urlpatterns = [
     path('contact.html', views.contact),
     path('m/category.html', mobile.category),
     path('m/search.html', mobile.search),
+    re_path(r'm/search-list(-(?P<page>\d+))?.html', mobile.search_list),
     re_path(r'm/book/(?P<pinyin>\w+)\.html', mobile.book),
     re_path(r'm/category/(?P<pinyin>\w+)(-(?P<page>\d+))?\.html$', mobile.category_list),
     re_path(r'm(-(?P<page>\d+))?\.html', mobile.home),

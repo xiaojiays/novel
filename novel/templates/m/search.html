@@ -1,38 +1,41 @@
-<html><head>
+<html>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <title>搜索 - {{settings.SITE_NAME}}小说网</title>
     <meta name="keywords" content="搜索,{{settings.SITE_NAME}}小说网">
     <meta name="description" content="{{settings.SITE_NAME}}小说网专注于小说搜索,提供网络各大小说最新章节,提供最全的小说保持最快的更新,让大家看书更方便,让搜书更容易.">
     <link rel="stylesheet" href="/static/wap.css">
     <meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="max-age=0">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-<meta name="MobileOptimized" content="240">
-<meta name="applicable-device" content="mobile">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta http-equiv="Cache-Control" content="max-age=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="MobileOptimized" content="240">
+    <meta name="applicable-device" content="mobile">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 <header class="ptm-bar ptm-bar-nav  ptm-fix">
     <div class="pt-search">
         <div class="ptm-col-xs-10">
-            <input style="margin-top: 8px;" type="search" name="searchkey" placeholder="请输入您要搜索的小说" autocomplete="off">
+            <input style="margin-top: 8px;" type="search" id="search-input" name="search-input" placeholder="请输入您要搜索的小说" autocomplete="off">
             <div class="input-left fa fa-search"></div>
         </div>
-        <div class="ptm-col-xs-2 pt-search-textbtn">搜 索</div>
+        <div class="ptm-col-xs-2 pt-search-textbtn"><a id="search" href="javascript:;">搜 索</a></div>
     </div>
     <ul class="searchsuggest" style="display: none">
     </ul>
 </header>
 <section class="ptm-content ptm-card" style="margin-top:60px;">
     <dl class="pt-search-list ptm-clearfix">
-        <dt>大家都在搜</dt>
-                {% for book in books %}
-                <dd><a href="/m/book/{{book.pinyin}}.html" class="ptm-text-cut" title="{{book.name}}"><span class="pt-icon"><i class="start">1</i></span>{{book.name}}</a></dd>
-                {% endfor %}
-            </dl>
+        <dt>其他人在搜</dt>
+        {% for book in books %}
+        <dd><a href="/m/book/{{book.pinyin}}.html" class="ptm-text-cut" title="{{book.name}}"><span class="pt-icon"><i
+                class="start">1</i></span>{{book.name}}</a></dd>
+        {% endfor %}
+    </dl>
 </section>
 <div class="ptm-line-x"></div>
 <div class="footer">
@@ -44,12 +47,18 @@
 </div>
 
 </div>
-<script type="text/javascript" src="/template/wapv1/public/script/search.min.js"></script>
+<script type="text/javascript" src="/static/jquery.js"></script>
 <script type="text/javascript">
-    var basesearchurl='/search.html?searchkey=';
-    $(function(){
-        $ptm.search.init($('[name=searchkey]'));
-    })
-</script>
+    $(document).ready(function () {
+        $("#search").click(function () {
+            var val = $("#search-input").val();
+            if ($.trim(val) == '') {
+                return false;
+            }
 
-<div id="chrome_websiteIP" class="chrome_websiteIP_right">118.123.210.35</div></body></html>
+            window.location.href = '/m/search-list.html?key=' + val;
+        });
+    });
+</script>
+</body>
+</html>
