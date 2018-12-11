@@ -82,8 +82,14 @@ class SourceLinkAdmin(admin.ModelAdmin):
         return '已初始'
 
 
+class ChapterAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'source_id', 'number', 'status']
+    form = ChapterForm
+
+
 admin.site.register(Source, SourceAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(SourceLink, SourceLinkAdmin)
+admin.site.register(Chapter, ChapterAdmin)

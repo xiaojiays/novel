@@ -27,14 +27,18 @@
 <section class="pt-infopage-more" style="margin-top:60px;">
     <div class="ptm-card pt-dir-list">
         <div class="ptm-card-header" style="background: #eee">
-            <div class="ptm-col-xs-9" style="padding-right:10px">
+            <div class="ptm-col-xs-6" style="padding-right:10px">
                 <button class="ptm-btn ptm-btn-primary ptm-btn-block ptm-btn-outlined showdir">
                     <span>{{target}}</span><i class="fa fa-angle-down pt-dir-icon"></i>
                 </button>
             </div>
+            <div class="ptm-col-xs-3" style="padding-right: 10px;" >
+                <a id="source" class="ptm-btn ptm-btn-primary ptm-btn-block ptm-btn-outlined" href="javascript:;">切换来源</a>
+            </div>
             <div class="ptm-col-xs-3">
                 <a class="ptm-btn ptm-btn-primary ptm-btn-block ptm-btn-outlined" href="/m/{{book.pinyin}}/chapters-{{page}}.html?sort={% ifequal sort 'desc' %}asc{%else%}desc{%endifequal%}">{% ifequal sort 'desc' %}倒序{%else%}正序{%endifequal%}
-                    <i class="fa fa-sort-amount-asc"></i></a>
+                    <i class="fa fa-sort-amount-asc"></i>
+                </a>
             </div>
         </div>
         <div class="ptm-card-content pt-dir">
@@ -49,7 +53,7 @@
         <div class="ptm-card-footer " style="background: #eee">
             <div class="ptm-col-xs-3">
                 <a class="ptm-btn ptm-btn-primary ptm-btn-block ptm-btn-outlined"
-                   href="/m/{{book.pinyin}}/chapters{% if page > 1 %}-{{page|add:-1}}{% endif %}.html?sort={{sort}}">上一页</a>
+                   href="/m/{{book.pinyin}}/chapters{% if page > 1 %}-{{page|add:-1}}{% endif %}.html?sort={{sort}}&&sid={{source_id}}">上一页</a>
             </div>
             <div class="ptm-col-xs-6" style="padding:0 10px;">
                 <button class="ptm-btn ptm-btn-primary ptm-btn-block ptm-btn-outlined showdir"><span>{{target}}</span><i
@@ -57,7 +61,7 @@
             </div>
             <div class="ptm-col-xs-3">
                 <a class="ptm-btn ptm-btn-primary ptm-btn-block ptm-btn-outlined"
-                   href="/m/{{book.pinyin}}/chapters{% if page < total_page %}-{{page|add:1}}{% endif %}.html?sort={{sort}}">下一页</a>
+                   href="/m/{{book.pinyin}}/chapters{% if page < total_page %}-{{page|add:1}}{% endif %}.html?sort={{sort}}&&sid={{source_id}}">下一页</a>
             </div>
         </div>
     </div>
@@ -73,7 +77,18 @@
         <p class="title">请选择章节</p>
         <ul>
             {% for p in chapter_pages %}
-            <li {% ifequal forloop.counter page %}class="active"{% endifequal %}><a href="/m/{{book.pinyin}}/chapters-{{forloop.counter}}.html?sort={{sort}}">{{p}}</a></li>
+            <li {% ifequal forloop.counter page %}class="active"{% endifequal %}><a href="/m/{{book.pinyin}}/chapters-{{forloop.counter}}.html?sort={{sort}}&sid={{source_id}}">{{p}}</a></li>
+            {% endfor %}
+         </ul>
+    </div>
+</div>
+<div class="source" style="display: none;">
+    <div class="ptm-alert-shade"></div>
+    <div class="pt-dir-sel" style="background-position: left 50px;">
+        <p class="title">请选择来源</p>
+        <ul>
+            {% for s in sources %}
+            <li {% ifequal forloop.counter 1 %}class="active"{% endifequal %}><a href="/m/{{book.pinyin}}/chapters.html?sort={{sort}}&&sid={{s.id}}">{{s.name}}</a></li>
             {% endfor %}
          </ul>
     </div>
@@ -83,10 +98,18 @@
     $(function () {
         $('.showdir').on('click', function () {
             $('.sel').removeClass('ptm-hide')
-        })
+        });
         $('.ptm-alert-shade').on('click', function () {
             $('.sel').addClass('ptm-hide')
-        })
+            $(".source").hide();
+        });
+        $("#source").click(function () {
+            if ($(".source").is(":visible")) {
+                $(".source").hide();
+            } else {
+                $(".source").show();
+            }
+        });
     })
 </script>
 </body>

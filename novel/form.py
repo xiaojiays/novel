@@ -57,6 +57,12 @@ class SourceLinkForm(forms.ModelForm):
         self.fields['source_id'] = forms.ChoiceField(choices=get_source_choices(), label='Source')
 
 
+class ChapterForm(forms.ModelForm):
+    class Meta:
+        model = Chapter
+        fields = '__all__'
+
+
 def get_book_choices():
     res = []
     books = Book.objects.all()

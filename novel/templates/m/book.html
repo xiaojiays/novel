@@ -77,13 +77,20 @@
             <ul class="ptm-list-view">
                 {% for chapter in chapters %}
                 <li class="ptm-list-view-cell">
-                    <a class="ptm-arrow-right" href="/jump?link={{chapter.link}}" title="{{book.name}} {{chapter.title}} {{chapter.created_at|date:'Y-m-d H:i:s'}}">{{chapter.title}}</a>
+                    <div style="font-size: 14px;">
+                        <div style="float: left;">
+                        <a class="ptm-arrow-right" href="/jump?link={{chapter.link}}" title="{{book.name}} {{chapter.title}} {{chapter.created_at|date:'Y-m-d H:i:s'}}">{{chapter.title}}</a>
+                        </div>
+                        <div style="float: right;">
+                            <a href="/m/{{book.pinyin}}/chapters.html?sid={{chapter.source_id}}">{{chapter.source_name}}</a>
+                        </div>
+                    </div>
                 </li>
                 {% endfor %}
             </ul>
         </div>
         <div class="ptm-card-footer" style="font-size:14px;">
-            <a href="/m/{{book.pinyin}}/chapters.html">查看目录></a>
+            <a href="/m/{{book.pinyin}}/chapters.html?sid={{source_id}}">查看目录></a>
         </div>
     </div>
 

@@ -113,7 +113,7 @@ def book(request, *args, **kwargs):
 
 
 def get_chapters(b):
-    chapters = Chapter.objects.filter(book_id=b.id).order_by('-id').all()[:20]
+    chapters = Chapter.objects.filter(book_id=b.id).order_by('-number').all()[:20]
     if len(chapters) == 0:
         return []
 
@@ -131,6 +131,7 @@ def get_chapters(b):
             'updated_at': chapter.updated_at,
             'source_name': source.name,
             'source_pinyin': source.pinyin,
+            'source_id': source.id,
         }
         res.append(item)
     return res
