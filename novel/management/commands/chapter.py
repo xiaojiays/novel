@@ -71,15 +71,17 @@ class Command(BaseCommand):
                 finds = re.findall(pattern, str(lists[0]))
                 number = 1
                 for find in finds:
+                    status = True
+                    number = Command.get_number(find[2], number)
                     chapter = Chapter(title=find[2],
                                       source_id=source.id,
                                       book_id=link.book_id,
                                       link=source.website + find[0],
                                       number=number,
+                                      status=status,
                                       )
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
 
@@ -99,7 +101,7 @@ class Command(BaseCommand):
                 if lists is None or len(lists) == 0:
                     print("\t同步\t" + link.link + " 失败")
                     continue
-                number = 0
+                number = 1
                 chapters = []
                 history = {}
                 for item in lists:
@@ -113,6 +115,7 @@ class Command(BaseCommand):
                         chapters.append({'link': finds[0][0], 'title': finds[0][1]})
 
                 for c in chapters:
+                    number = Command.get_number(c.get('title'), number)
                     chapter = Chapter(title=c.get('title'),
                                       source_id=source.id,
                                       book_id=link.book_id,
@@ -120,7 +123,6 @@ class Command(BaseCommand):
                                       number=number)
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
 
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
@@ -155,6 +157,7 @@ class Command(BaseCommand):
                         chapters.append({'link': finds[0][0], 'title': finds[0][1]})
 
                 for c in chapters:
+                    number = Command.get_number(c.get('title'), number)
                     chapter = Chapter(title=c.get('title'),
                                       source_id=source.id,
                                       book_id=link.book_id,
@@ -162,7 +165,6 @@ class Command(BaseCommand):
                                       number=number)
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
 
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
@@ -183,7 +185,7 @@ class Command(BaseCommand):
                 if lists is None or len(lists) == 0:
                     print("\t同步\t" + link.link + " 失败")
                     continue
-                number = 0
+                number = 1
                 chapters = []
                 history = {}
                 for item in lists:
@@ -197,6 +199,7 @@ class Command(BaseCommand):
                         chapters.append({'link': finds[0][0], 'title': finds[0][1]})
 
                 for c in chapters:
+                    number = Command.get_number(c.get('title'), number)
                     chapter = Chapter(title=c.get('title'),
                                       source_id=source.id,
                                       book_id=link.book_id,
@@ -204,7 +207,6 @@ class Command(BaseCommand):
                                       number=number)
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
 
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
@@ -246,14 +248,10 @@ class Command(BaseCommand):
                         history.setdefault(item[0], 1)
                         chapters.append({'link': item[0], 'title': item[1]})
 
-                number = 0
+                number = 1
                 status = True
                 for c in chapters:
-                    num = Command.get_number(c['title'])
-                    if num != -1:
-                        if num - number > 1 or num < number:
-                            status = False
-                        number = num
+                    number = Command.get_number(c['title'], number)
                     chapter = Chapter(title=str(c['title']),
                                       source_id=source.id,
                                       book_id=link.book_id,
@@ -262,7 +260,6 @@ class Command(BaseCommand):
                                       status=status,)
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
 
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
@@ -283,7 +280,7 @@ class Command(BaseCommand):
                 if lists is None or len(lists) == 0:
                     print("\t同步\t" + link.link + " 失败")
                     continue
-                number = 0
+                number = 1
                 chapters = []
                 history = {}
                 for item in lists:
@@ -297,6 +294,7 @@ class Command(BaseCommand):
                         chapters.append({'link': finds[0][0], 'title': finds[0][1]})
 
                 for c in chapters:
+                    number = Command.get_number(c.get('title'), number)
                     chapter = Chapter(title=c.get('title'),
                                       source_id=source.id,
                                       book_id=link.book_id,
@@ -304,7 +302,6 @@ class Command(BaseCommand):
                                       number=number)
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
 
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
@@ -325,7 +322,7 @@ class Command(BaseCommand):
                 if lists is None or len(lists) == 0:
                     print("\t同步\t" + link.link + " 失败")
                     continue
-                number = 0
+                number = 1
                 chapters = []
                 history = {}
                 for item in lists:
@@ -339,6 +336,7 @@ class Command(BaseCommand):
                         chapters.append({'link': finds[0][0], 'title': finds[0][1]})
 
                 for c in chapters:
+                    number = Command.get_number(c.get('title'), number)
                     chapter = Chapter(title=c.get('title'),
                                       source_id=source.id,
                                       book_id=link.book_id,
@@ -346,13 +344,22 @@ class Command(BaseCommand):
                                       number=number)
                     if not Chapter.exists(chapter):
                         chapter.save()
-                    number += 1
 
             offset += size
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
 
     @staticmethod
-    def get_number(title):
+    def get_number(title, number):
+        num = Command.get_num(title)
+        if num != -1:
+            if num - number > 10 or num < number:
+                number += 0
+            else:
+                number = num
+        return number
+
+    @staticmethod
+    def get_num(title):
         pattern = "第(\d+)章"
         finds = re.findall(pattern, title)
         if finds is None or len(finds) == 0:
@@ -366,25 +373,29 @@ class Command(BaseCommand):
 
     @staticmethod
     def chinese2digits(uchars_chinese):
-        common_used_numerals_tmp = {'零': 0, '一': 1, '二': 2, '两': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8,
+        try:
+            common_used_numerals_tmp = {'零': 0, '一': 1, '二': 2, '两': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8,
                                     '九': 9, '十': 10, '百': 100, '千': 1000, '万': 10000, '亿': 100000000}
 
-        total = 0
-        r = 1
-        for i in range(len(uchars_chinese) - 1, -1, -1):
-            val = common_used_numerals_tmp.get(uchars_chinese[i])
-            if val >= 10 and i == 0:
-                if val > r:
-                    r = val
-                    total = total + val
+            total = 0
+            r = 1
+            for i in range(len(uchars_chinese) - 1, -1, -1):
+                val = common_used_numerals_tmp.get(uchars_chinese[i])
+                if val >= 10 and i == 0:
+                    if val > r:
+                        r = val
+                        total = total + val
+                    else:
+                        r = r * val
+                elif val >= 10:
+                    if val > r:
+                        r = val
+                    else:
+                        r = r * val
                 else:
-                    r = r * val
-            elif val >= 10:
-                if val > r:
-                    r = val
-                else:
-                    r = r * val
-            else:
-                total = total + r * val
-        return total
+                    total = total + r * val
+            return total
+        except Exception as e:
+            print(e)
+        return -100
 
