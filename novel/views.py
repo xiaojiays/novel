@@ -51,6 +51,7 @@ def get_data(b):
         'img': b.img,
         'finish': b.finish,
         'desc': b.description,
+        'clicks': b.clicks,
     }
     if category is not None:
         item.setdefault('category', category)

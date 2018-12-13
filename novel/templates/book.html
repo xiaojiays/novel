@@ -24,7 +24,7 @@
                             <div class="novelinfo-l" style="float:right;">
                                 <p id="author">作者：<i><a title="{{ book.author.name }} 作品大全" href="/author/{{ book.author.pinyin }}.html">{{ book.author.name }}</a></i>&nbsp;&nbsp;类别：<i><a
                                         title="{{ book.category.name }}小说" href="/category/{{ book.category.pinyin }}.html">{{ book.category.name }}</a></i>&nbsp;&nbsp;状态：<i>{% if book.finish %}完结{% else %}连载中{% endif %}</i></p>
-                                <p id="stats">点击：<i>6335673</i>&nbsp;&nbsp;推荐：<i>2194</i>&nbsp;&nbsp;收藏：<i>4694</i></p>
+                                <p id="stats">点击：<i>{{ book.clicks|add:2173 }}</i>&nbsp</p>
                                 <p id="update">更新：<i>{{ book.chapter.updated_at | date:'Y-m-d' }}</i>&nbsp;&nbsp;最新：<i>
                                     <a title="{{ book.chapter.title }}" href="/jump?link={{ book.chapter.link }}" target="_blank">{{ book.chapter.title }}</a></i></p>
                                 <div id="intro"><h3>{{ book.name }} 内容简介：</h3>
