@@ -46,8 +46,10 @@ class Command(BaseCommand):
             Command.qiushu(source)
         elif source.name == '书荒阁':
             Command.shuhuangge(source)
-        elif source.name =='天籁小说':
+        elif source.name == '天籁小说':
             Command.tianlai(source)
+        elif source.name == '560小说':
+            Command.xs560(source)
 
         print("\t同步 " + source.name + " 完毕")
         print('同步章节数据完毕')
@@ -349,6 +351,54 @@ class Command(BaseCommand):
             links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
 
     @staticmethod
+    def xs560(source):
+        offset = 0
+        size = 100
+        links = SourceLink.objects.filter(source_id=source.id).all()[offset:size]
+        pattern = '<a.*?href="(.*?)".*?>(.*?)</a>'
+        while len(links) > 0:
+            for link in links:
+                if link.no_need_grab():
+                    continue
+                print("\t正在同步\t" + source.name + " 链接：" + link.link)
+                soup = Util.get_html_soup(link.link)
+                lists = soup.find_all('dd')
+                if lists is None or len(lists) == 0:
+                    print("\t同步\t" + link.link + " 失败")
+                    continue
+                number = 1
+                chapters = []
+                history = {}
+                for item in lists:
+                    finds = re.findall(pattern, str(item))
+                    url = finds[0][0]
+                    if url.startswith("/"):
+                        url = source.website + url
+                    else:
+                        url = link.link + url
+                    if history.get(link) is not None:
+                        for c in chapters:
+                            if c['link'] == url:
+                                chapters.remove(c)
+                    else:
+                        history.setdefault(link, 1)
+
+                    chapters.append({'link': url, 'title': finds[0][1]})
+
+                for c in chapters:
+                    number = Command.get_number(c.get('title'), number)
+                    chapter = Chapter(title=c.get('title'),
+                                      source_id=source.id,
+                                      book_id=link.book_id,
+                                      link=c.get('link'),
+                                      number=number)
+                    if not Chapter.exists(chapter):
+                        chapter.save()
+
+            offset += size
+            links = SourceLink.objects.filter(status=0).filter(source_id=source.id).all()[offset:size]
+
+    @staticmethod
     def get_number(title, number):
         num = Command.get_num(title)
         if num != -1:
@@ -398,4 +448,5 @@ class Command(BaseCommand):
         except Exception as e:
             print(e)
         return -100
+
 
