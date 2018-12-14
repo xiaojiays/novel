@@ -3,12 +3,14 @@ from django.core.paginator import Paginator
 
 from novel.models import Book, Chapter, Source, Author, Category
 from novel.util import Util
-from novel import settings
+from novel import settings, mobile
 
 import math
 
 
 def home(request, *args, **kwargs):
+    if request.get_host() == 'm.sancunrenjian.net.cn':
+        return mobile.home(request, args, kwargs)
     size = 50
     book_list = Book.objects.filter(status=0).all()
     paginator = Paginator(book_list, size)
