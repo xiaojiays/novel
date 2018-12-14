@@ -24,6 +24,7 @@ def category(request):
     params = {
         'categories': categories,
         'title': '小说分类',
+        'settings': settings,
     }
     return render_to_response('m/category.html', params)
 
@@ -47,6 +48,7 @@ def search(request):
     params = {
         'title': '搜书',
         'books': books,
+        'settings': settings,
     }
     return render_to_response('m/search.html', params)
 
