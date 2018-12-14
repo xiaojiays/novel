@@ -9,8 +9,8 @@ import math
 
 
 def home(request, *args, **kwargs):
-    if request.get_host() == 'm.sancunrenjian.net.cn':
-        return mobile.home(request, args, kwargs)
+    if request.META.get('HTTP_X_MOBILE') == 'yes':
+        return mobile(request, args, kwargs)
     size = 50
     book_list = Book.objects.filter(status=0).all()
     paginator = Paginator(book_list, size)
