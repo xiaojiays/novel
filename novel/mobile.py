@@ -163,6 +163,7 @@ def chapters(request, *args, **kwargs):
         'sort': request.GET.get('sort'),
         'start': offset,
         'sources': get_book_sources(book, source_id),
+        'source_id': source_id,
     }
     return render_to_response('m/chapters.html', params)
 
