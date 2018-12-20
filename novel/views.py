@@ -12,7 +12,7 @@ def home(request, *args, **kwargs):
     if request.META.get('HTTP_X_MOBILE') == 'yes':
         return mobile.home(request, args, kwargs)
     size = 50
-    book_list = Book.objects.filter(status=0).all()
+    book_list = Book.objects.filter(status=0).order_by('-id').all()
     paginator = Paginator(book_list, size)
     page = Util.get_page(kwargs)
     books = paginator.page(page)
@@ -37,7 +37,6 @@ def home(request, *args, **kwargs):
         'book': get_default_book(),
         'hottest': hottest_books(),
         'newest': newest_books(),
-
     }
     return render_to_response('home.html', params)
 
@@ -45,8 +44,9 @@ def home(request, *args, **kwargs):
 def get_data(b):
     category = b.categories.first()
     author = b.authors.first()
-    chapter = Chapter.objects.filter(book_id=b.id).order_by('-id').first()
-
+    chapter = Chapter.objects.filter(book_id=b.id).order_by('-created_at').first()
+    #chapter = Chapter.objects.raw('SELECT * FROM novel_chapter WHERE id = (SELECT ID FROM `novel_chapter` '
+    #                              'WHERE `book_id` = ' + str(b.id) + ' ORDER BY `id` DESC LIMIT 1)')
     item = {
         'pinyin': b.pinyin,
         'name': b.name,
@@ -116,7 +116,7 @@ def book(request, *args, **kwargs):
 
 
 def get_chapters(b):
-    chapters = Chapter.objects.filter(book_id=b.id).order_by('-number').all()[:20]
+    chapters = Chapter.objects.filter(book_id=b.id).order_by('-number').order_by('-id').all()[:20]
     if len(chapters) == 0:
         return []
 
@@ -154,7 +154,7 @@ def sbc(request, *args, **kwargs):
     if b is None:
         return page_not_found(request)
 
-    chapters = Chapter.objects.filter(source_id=source.id).filter(book_id=b.id).order_by('-number').all()
+    chapters = Chapter.objects.filter(source_id=source.id).filter(book_id=b.id).order_by('-number').order_by('-id').all()
     params = {
         'source': source,
         'book': b,
@@ -173,7 +173,7 @@ def chapter_list(request, *args, **kwargs):
     category = b.categories.first()
 
     size = 50
-    chapters = Chapter.objects.filter(book_id=b.id).order_by('-number').all()
+    chapters = Chapter.objects.filter(book_id=b.id).order_by('-number').order_by('-id').all()
     total = chapters.count()
     paginator = Paginator(chapters, size)
     page = Util.get_page(kwargs)

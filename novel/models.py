@@ -68,7 +68,7 @@ class Book(models.Model):
     description = models.CharField(max_length=200, default='')
     clicks = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField()
+    updated_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -103,13 +103,16 @@ class Chapter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
 
+    class Meta:
+        index_together = [('book_id', 'source_id', 'created_at',), ('title', 'book_id', 'source_id',)]
+
     def __str__(self):
         return self.title
 
     @staticmethod
     def exists(chapter):
-        return Chapter.objects.filter(source_id=chapter.source_id).filter(book_id=chapter.book_id).filter(
-            title=chapter.title).count() > 0
+        return Chapter.objects.filter(title=chapter.title, book_id=chapter.book_id,
+                                      source_id=chapter.source_id).count() > 0
 
 
 class Content(models.Model):
